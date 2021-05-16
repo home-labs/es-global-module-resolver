@@ -1,9 +1,9 @@
 /// <reference path="./test-module/index.d.ts" />
 
-import { ESModuleResolver } from './index.js';
+import { ESGlobalModuleResolver } from './index.js';
 
 
-const esModuleResolver = new ESModuleResolver();
+const esModuleResolver = new ESGlobalModuleResolver();
 
 let resolvedPath: string;
 

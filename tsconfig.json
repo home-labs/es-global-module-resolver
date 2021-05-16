@@ -11,7 +11,7 @@
     "strict": true,
     "declaration": true,
     "declarationMap": true,
-    "outDir": "dist/@actjs.on/esmodule_resolver",
+    "outDir": "dist/@actjs.on/es-global-module-resolver",
     "moduleResolution": "node",
     "rootDir": "./",
     "sourceMap": true

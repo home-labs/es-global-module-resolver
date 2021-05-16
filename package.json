@@ -1,5 +1,5 @@
 {
-  "name": "@actjs.on/esmodule_resolver",
+  "name": "@actjs.on/es-global-module-resolver",
   "version": "1.0.0-rc.1",
   "type": "module",
   "devDependencies": {

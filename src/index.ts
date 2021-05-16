@@ -1,4 +1,4 @@
-export class ESModuleResolver {
+export class ESGlobalModuleResolver {
 
     private loadedModulePaths: string[];
 
