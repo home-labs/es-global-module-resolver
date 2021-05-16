@@ -1,5 +1,7 @@
 /// <reference path="./test-module/index.d.ts" />
 
+export { };
+
 import { ESGlobalModuleResolver } from './index.js';
 
 
