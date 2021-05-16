@@ -5,16 +5,16 @@ export { };
 import { ESGlobalModuleResolver } from './index.js';
 
 
-const esModuleResolver = new ESGlobalModuleResolver();
+const esGlobalModuleResolver = new ESGlobalModuleResolver();
 
 let resolvedPath: string;
 
 try {
-    resolvedPath = await esModuleResolver.load('./test-module', 8);
-    // resolvedPath = await esModuleResolver.load('./test-module', 2);
+    resolvedPath = await esGlobalModuleResolver.load('test-module', 8);
+    // resolvedPath = await esGlobalModuleResolver.load('test-module', 2);
 
-    // resolvedPath = await esModuleResolver.load('./test-module/index');
-    // resolvedPath = await esModuleResolver.load('./test-module/index.js');
+    // resolvedPath = await esGlobalModuleResolver.load('test-module/index');
+    // resolvedPath = await esGlobalModuleResolver.load('test-module/index.js');
 
     console.log(`\nResolved path: `, resolvedPath);
 } catch (r) {
@@ -26,5 +26,5 @@ try {
 // este import é necessário porque o NodeJS ainda não entende algo que está carregado mas não foi importado ou requerido explicitamente
 // import { TestModule } from './test-module/index.js';
 
-const test: TestModule = new TestModule();
-test.printExampleMessage();
+// const test: TestModule = new TestModule();
+// test.printExampleMessage();

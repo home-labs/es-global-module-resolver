@@ -1,3 +1,5 @@
+import path from 'path';
+
 export class ESGlobalModuleResolver {
 
     private loadedModulePaths: string[];
@@ -6,7 +8,7 @@ export class ESGlobalModuleResolver {
         this.loadedModulePaths = [];
     }
 
-    load(path: string,
+    load(relativePath: string,
         fileExtension: string | number = 'js',
         timeoutValue: number = 0): Promise<string> {
 
@@ -16,32 +18,36 @@ export class ESGlobalModuleResolver {
 
         let countdown!: NodeJS.Timeout;
 
+        let absolutePath: string;
+
         if (typeof fileExtension === 'number') {
             timeoutValue = fileExtension;
             fileExtension = 'js';
         }
 
-        if (indexPattern.test(path)) {
-            path = `${path}.${fileExtension}`;
-        } else if (!extensionPattern.test(path)) {
-            path = `${path}/index.${fileExtension}`;
+        if (indexPattern.test(relativePath)) {
+            relativePath = `${relativePath}.${fileExtension}`;
+        } else if (!extensionPattern.test(relativePath)) {
+            relativePath = `${relativePath}/index.${fileExtension}`;
         }
 
+        absolutePath = `${path.dirname(import.meta.url)}/${relativePath}`;
+
         // for don't try to load a already loaded module
-        if (this.loadedModulePaths.indexOf(path) >= 0) {
-            return Promise.resolve(path);
+        if (this.loadedModulePaths.indexOf(absolutePath) >= 0) {
+            return Promise.resolve(absolutePath);
         }
 
         return new Promise(
-            (loadAccomplish: (path: string) => void, loadReject: (r: any) => void) => {
+            (loadAccomplish: (response: string) => void, loadReject: (r: any) => void) => {
 
-                const importPromise: Promise<void> = import(path);
+                const importPromise: Promise<void> = import(absolutePath);
 
                 if (timeoutValue) {
                     countdown = setTimeout(
                         () => {
                             loadReject(new Error(
-                                `The time to load the module defined as relative in "${path}" is over.`
+                                `The time to load the module defined as relative in "${absolutePath}" is over.`
                                 )
                             );
                         },
@@ -56,8 +62,8 @@ export class ESGlobalModuleResolver {
                                 clearTimeout(countdown);
                             }
 
-                            loadAccomplish(path);
-                            this.loadedModulePaths.push(path);
+                            loadAccomplish(absolutePath);
+                            this.loadedModulePaths.push(absolutePath);
                         }
                     ).catch(
                         (r) => {

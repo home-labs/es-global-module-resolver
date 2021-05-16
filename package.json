@@ -1,6 +1,6 @@
 {
   "name": "@actjs.on/es-global-module-resolver",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "type": "module",
   "devDependencies": {
     "@types/node": "~14.14.37",
