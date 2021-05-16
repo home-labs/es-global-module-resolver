@@ -1,4 +1,10 @@
 import path from 'path';
+import url from 'url';
+
+const relativePath = path
+    .relative(url.fileURLToPath(path.dirname(import.meta.url)), process.cwd());
+
+console.log(path.normalize(`${relativePath}/extensions/number`).split(path.sep).join('/'))
 
 export class ESGlobalModuleResolver {
 
