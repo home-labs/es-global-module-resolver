@@ -17,10 +17,10 @@
     "sourceMap": true
   }
   , "include": [
-    "package.json"
+    "package.json",
+    ".npmignore"
   ]
   , "references": [
     {"path": "./src"}
-    // , {"path": "./src/test-module"}
   ]
 }
