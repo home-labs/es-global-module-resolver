@@ -1,4 +1,4 @@
-/// <reference path="./test-module.d.ts" />
+/// <reference path="test-module.d.ts" />
 
 export { };
 
@@ -10,14 +10,13 @@ const esGlobalModuleResolver = new ESGlobalModuleResolver();
 let resolvedPath: string;
 
 try {
-    // resolvedPath = await esGlobalModuleResolver.load('test-module', 8);
-    // await esGlobalModuleResolver.load('./test-module.js', 8);
-    resolvedPath = await esGlobalModuleResolver.load('./test-module.js', 2);
+    resolvedPath = await esGlobalModuleResolver.load('./test-module.js', 8);
+    // resolvedPath = await esGlobalModuleResolver.load('./test-module.js', 2);
 
-    // resolvedPath = await esGlobalModuleResolver.load('test-module/index');
-    // resolvedPath = await esGlobalModuleResolver.load('test-module/index.js');
+    // resolvedPath = await esGlobalModuleResolver.load('./test-module/index');
+    // resolvedPath = await esGlobalModuleResolver.load('./test-module/index.js');
 
-    // console.log(`\nResolved path: `, resolvedPath);
+    console.log(`\nResolved path: `, resolvedPath);
 } catch (r) {
     console.log(`\n`);
     console.log(r);
@@ -27,5 +26,5 @@ try {
 // este import é necessário porque o NodeJS ainda não entende algo que está carregado mas não foi importado ou requerido explicitamente
 // import { TestModule } from './test-module/index.js';
 
-// const test: TestModule = new TestModule();
-// test.printExampleMessage();
+const test: TestModule = new TestModule();
+test.printExampleMessage();
