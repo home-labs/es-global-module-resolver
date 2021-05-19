@@ -1,7 +1,5 @@
 {
-  // to build, run: $ tsc -w on root path of the tsconfig.json
   "compilerOptions": {
-    // genereted by $ tsc init
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ES2020",

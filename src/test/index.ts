@@ -1,8 +1,8 @@
-/// <reference path="./test-module/index.d.ts" />
+/// <reference path="./test-module.d.ts" />
 
 export { };
 
-import { ESGlobalModuleResolver } from './index.js';
+import { ESGlobalModuleResolver } from '../index.js';
 
 
 const esGlobalModuleResolver = new ESGlobalModuleResolver();
@@ -10,13 +10,14 @@ const esGlobalModuleResolver = new ESGlobalModuleResolver();
 let resolvedPath: string;
 
 try {
-    resolvedPath = await esGlobalModuleResolver.load('test-module', 8);
-    // resolvedPath = await esGlobalModuleResolver.load('test-module', 2);
+    // resolvedPath = await esGlobalModuleResolver.load('test-module', 8);
+    // await esGlobalModuleResolver.load('./test-module.js', 8);
+    resolvedPath = await esGlobalModuleResolver.load('./test-module.js', 2);
 
     // resolvedPath = await esGlobalModuleResolver.load('test-module/index');
     // resolvedPath = await esGlobalModuleResolver.load('test-module/index.js');
 
-    console.log(`\nResolved path: `, resolvedPath);
+    // console.log(`\nResolved path: `, resolvedPath);
 } catch (r) {
     console.log(`\n`);
     console.log(r);

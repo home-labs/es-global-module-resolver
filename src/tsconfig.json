@@ -11,8 +11,8 @@
     ]
   }
   , "include": [
-    "index.ts",
-    "./test-module/**/*",
-    "test.ts"
+    "lib/**/*",
+    "test/**/*",
+    "index.ts"
   ]
 }
