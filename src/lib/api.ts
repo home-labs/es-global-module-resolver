@@ -65,7 +65,7 @@ export class ESGlobalModuleResolver {
         return new Promise(
             (loadAccomplish: (response: string) => void, loadReject: (r: any) => void) => {
 
-                console.log(`arrive here with relative path: ${relativePath}`)
+                // console.log(`arrive here with relative path: ${relativePath}`)
                 const importPromise: Promise<void> = import(resolvedPath);
 
                 if (timeoutValue) {
