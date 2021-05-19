@@ -7,16 +7,16 @@ import { ESGlobalModuleResolver } from '../index.js';
 
 const esGlobalModuleResolver = new ESGlobalModuleResolver();
 
-let resolvedPath: string;
+let resolvedDirectory: string;
 
 try {
-    resolvedPath = await esGlobalModuleResolver.load('./test-module.js', 8);
-    // resolvedPath = await esGlobalModuleResolver.load('./test-module.js', 2);
+    resolvedDirectory = await esGlobalModuleResolver.load('./test-module.js', 8);
+    // resolvedDirectory = await esGlobalModuleResolver.load('./test-module.js', 2);
 
-    // resolvedPath = await esGlobalModuleResolver.load('./test-module/index');
-    // resolvedPath = await esGlobalModuleResolver.load('./test-module/index.js');
+    // resolvedDirectory = await esGlobalModuleResolver.load('./test-module/index');
+    // resolvedDirectory = await esGlobalModuleResolver.load('./test-module/index.js');
 
-    console.log(`\nResolved path: `, resolvedPath);
+    console.log(`\nResolved directory: `, resolvedDirectory);
 } catch (r) {
     console.log(`\n`);
     console.log(r);
