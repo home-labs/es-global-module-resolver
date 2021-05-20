@@ -1,6 +1,6 @@
 {
   "name": "@actjs.on/es-global-module-resolver",
-  "version": "1.0.0-rc.3",
+  "version": "1.0.0-rc.5",
   "type": "module",
   "dependencies": {
     "@actjs.on/module-track-trace": "1.0.0-rc.2"

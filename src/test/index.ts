@@ -1,6 +1,5 @@
-/// <reference path="test-module.d.ts" />
+/// <reference path="./test-module.d.ts" />
 
-export { };
 
 import { ESGlobalModuleResolver } from '../index.js';
 
@@ -27,4 +26,4 @@ try {
 // import { TestModule } from './test-module/index.js';
 
 const test: TestModule = new TestModule();
-test.printExampleMessage();
+// test.printExampleMessage();

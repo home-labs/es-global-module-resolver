@@ -10,3 +10,12 @@ declare global {
     }
 
 }
+
+
+globalThis.TestModule = () => {
+
+    this.printExampleMessage = (): string => {
+        console.log(`This is a example of message.`);
+    }
+
+}
