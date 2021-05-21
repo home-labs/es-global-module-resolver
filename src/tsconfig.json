@@ -9,6 +9,8 @@
     "lib": [
       // "ES6",
     ]
+    , "allowJs": true
+    , "allowUmdGlobalAccess": true
   }
   , "include": [
     "lib/**/*",

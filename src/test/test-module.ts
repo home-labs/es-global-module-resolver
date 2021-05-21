@@ -1,7 +1,12 @@
-export class TestModule {
+export { };
 
-    printExampleMessage() {
-        console.log(`This is a example of message.`);
+
+declare global {
+
+    class TestModule {
+
+        printExampleMessage(): void;
+
     }
 
 }
