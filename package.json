@@ -1,9 +1,9 @@
 {
-  "name": "@actjs.on/es-global-module-resolver",
-  "version": "1.0.0-rc.5",
+  "name": "@actjs.on/es-loading-resolver",
+  "version": "1.0.0-rc.1",
   "type": "module",
   "dependencies": {
-    "@actjs.on/module-track-trace": "1.0.0-rc.2"
+    "@actjs.on/caller-file-track-trace": "1.0.0-rc.2"
   },
   "devDependencies": {
     "@types/node": "~14.14.37",

@@ -9,7 +9,7 @@
     "strict": true,
     "declaration": true,
     "declarationMap": true,
-    "outDir": "dist/@actjs.on/es-global-module-resolver",
+    "outDir": "dist/@actjs.on/es-loading-resolver",
     "moduleResolution": "node",
     "rootDir": "./",
     "sourceMap": true
