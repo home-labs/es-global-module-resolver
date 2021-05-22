@@ -71,8 +71,6 @@ export class ESLoadingResolver {
             .replace(/(?:\.\/){2,}/, './')
             .replace(/(?<=\b)(?:\.\/)+/g, '/');
 
-        this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
-
         // console.log(!this.extensionPattern.test(this.relativePath))
         if (this.indexPattern.test(this.relativePath)
             || this.extensionPattern.test(this.relativePath)
@@ -84,6 +82,8 @@ export class ESLoadingResolver {
             //     this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
             // }
         }
+
+        // this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
 
         // this.absolutePath = path.normalize(`${process.cwd()}/${relativeFileDirectory}`);
 
