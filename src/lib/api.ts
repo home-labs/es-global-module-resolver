@@ -140,7 +140,7 @@ export class ESLoadingResolver {
             .removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
     }
 
-    importModule(relativePath: string, options?: IESLoadingOptions): Promise<IESLoadingResponse> {
+    import(relativePath: string, options?: IESLoadingOptions): Promise<IESLoadingResponse> {
 
         this.relativePath = relativePath;
 

@@ -1,6 +1,6 @@
 {
   "name": "@actjs.on/es-loading-resolver",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "type": "module",
   "dependencies": {
     "@actjs.on/caller-file-track-trace": "1.0.0-rc.2"

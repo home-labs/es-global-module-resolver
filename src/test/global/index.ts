@@ -13,12 +13,12 @@ let resolvedDirectory: IESLoadingResponse;
 
 try {
     resolvedDirectory = await esGlobalModuleResolver
-        .importModule('../global-number-extension-by-parent-folder',
-        // .importModule('./number-extension-by-folder',
-        // .importModule('./number-extension-by-folder/index.js',
-        // .importModule('./number-extension-by-folder/index',
-        // .importModule('./number-extension.js',
-        // .importModule('./number-extension',
+        .import('../global-number-extension-by-parent-folder',
+        // .import('./number-extension-by-folder',
+        // .import('./number-extension-by-folder/index.js',
+        // .import('./number-extension-by-folder/index',
+        // .import('./number-extension.js',
+        // .import('./number-extension',
     {
             timeoutValue: 8
             // timeoutValue: 2

@@ -13,12 +13,12 @@ let ESTestModule;
 
 try {
     esLoadingResponse = await esGlobalModuleResolver
-        // .importModule('../global-number-extension-by-parent-folder',
-        .importModule('./es-test-module',
-        // .importModule('./number-extension-by-folder/index.js',
-        // .importModule('./number-extension-by-folder/index',
-        // .importModule('./number-extension.js',
-        // .importModule('./number-extension',
+        // .import('../global-number-extension-by-parent-folder',
+        .import('./es-test-module',
+        // .import('./number-extension-by-folder/index.js',
+        // .import('./number-extension-by-folder/index',
+        // .import('./number-extension.js',
+        // .import('./number-extension',
         {
             moduleName: 'ESTestModule',
 
@@ -37,9 +37,3 @@ try {
     console.log(r);
     console.log(`\n`);
 }
-
-// declare const ESTestModule: InstanceType<any> = ``;
-// // declare const Test: InstanceType<any>;
-// const test = new esLoadingResponse.default();
-
-// test.printATestMessage();
