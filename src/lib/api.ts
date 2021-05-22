@@ -73,25 +73,14 @@ export class ESLoadingResolver {
 
         this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
 
-        // if (typeof this.fileExtension === 'number') {
-        //     this.timeoutValue = this.fileExtension;
-        //     this.fileExtension = 'js';
-        // }
-
-        // console.log(this.absolutePath)
-        // console.log(this.absoluteDirectory)
-
         // console.log(!this.extensionPattern.test(this.relativePath))
-        // testar
-        if (this.indexPattern.test(this.relativePath)) {
+        if (this.indexPattern.test(this.relativePath)
+            || this.extensionPattern.test(this.relativePath)
+            ) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
         } else {
             // aqui pode estar falando de um arquivo sem extensão informada - caso em que bastaria acrescentar a extensão - ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
             // if () {
-
-            // }
-
-            // if (!this.extensionPattern.test(this.relativePath)) {
             //     this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
             // }
         }
