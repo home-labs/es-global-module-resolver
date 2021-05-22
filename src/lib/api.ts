@@ -86,7 +86,7 @@ export class ESLoadingResolver {
         if (this.indexPattern.test(this.relativePath)) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
         } else {
-            // aqui pode estar falando de um arquivo sem extensão informada ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
+            // aqui pode estar falando de um arquivo sem extensão informada - caso em que bastaria acrescentar a extensão - ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
             // if () {
 
             // }
