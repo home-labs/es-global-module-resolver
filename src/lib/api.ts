@@ -51,12 +51,16 @@ export class ESLoadingResolver {
 
     }
 
-    private treatPath(path: string) {
+    private convertPathSeparator(path: string): string {
+        return path.replace(/(?:\\)/g, '/');
+    }
+
+    private treatPath(path: string): string {
         return this.removeUnecessaryPathSeparator(path
             // .replace(/(?:\\){2,}/g, '\\')
-            .replace(/(?:\\)/g, '/')
             .replace(/(?:\.{3,}\/)+/g, '../')
             .replace(/(?:\/){2,}/g, '/')
+            .replace(/\/$/, '')
             .replace(/(?:\.\/){2,}/, './'));
     }
 
@@ -79,37 +83,39 @@ export class ESLoadingResolver {
         const relativeRootDirectory: string = path.relative(currentDirectory, process.cwd());
 
         const relativeDirectory: string = this
-            .treatPath(`${relativeRootDirectory}/${relativeFileDirectory}`);
+            .convertPathSeparator(`${relativeRootDirectory}/${relativeFileDirectory}`);
 
         let absoluteDirectory: string = path
-            .normalize(this.removeUnecessaryPathSeparator(`${process.cwd()}/${relativeFileDirectory}`));
+            .normalize(`${process.cwd()}/${relativeFileDirectory}`);
 
         let absolutePath4Test: string;
 
         if (this.indexPattern.test(this.relativePath)) {
-            this.absolutePath = path
-                .normalize(`${absoluteDirectory}/${this.relativePath}.${this.fileExtension}`);
+            this.absolutePath = path.normalize(this
+                .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this
+                    .relativePath}.${this.fileExtension}`));
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
         } else if (this.extensionPattern.test(this.relativePath)) {
-            this.absolutePath = path.normalize(`${absoluteDirectory}/${this.relativePath}`);
+            this.absolutePath = path.normalize(this
+                .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this.relativePath}`));
         } else {
             absolutePath4Test = path.normalize(this
                 .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this
                     .relativePath}.${this.fileExtension}`));
             if (existsSync(absolutePath4Test)) {
                 this.absolutePath = absolutePath4Test;
-                this.relativePath = `${this.relativePath}.${this.fileExtension}`;
             } else {
-                absoluteDirectory = `${absoluteDirectory}/${this.relativePath}`;
+                absoluteDirectory = this.removeUnecessaryPathSeparator(`${absoluteDirectory}/${this.relativePath}`);
 
                 this.absolutePath = path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
-                this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
+                this.relativePath = `${this.relativePath}/index`;
             }
+
+            this.relativePath = `${this.relativePath}.${this.fileExtension}`;
+
         }
 
         this.resolvedPath = this.removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
-
-        console.log(path.normalize('./folder/./subfolder'))
 
     }
 
@@ -119,7 +125,9 @@ export class ESLoadingResolver {
         // timeoutValue: number = 0
     ): Promise<IESLoadingResponse> {
 
-        this.relativePath = relativePath;
+        this.relativePath = this
+            .removeUnecessaryPathSeparator(this
+                .treatPath(this.convertPathSeparator(relativePath)));
 
         // this.fileExtension = options?.fileExtension as string;
 
