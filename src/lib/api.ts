@@ -33,7 +33,7 @@ export class ESLoadingResolver {
 
     constructor(fileExtension?: string, options?: IESLoadingOptions) {
 
-        this.fileExtension = fileExtension || 'mjs';
+        this.fileExtension = fileExtension || 'js';
 
         this.timeoutValue = options?.timeoutValue || 0;
 

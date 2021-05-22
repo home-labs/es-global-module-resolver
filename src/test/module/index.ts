@@ -3,7 +3,7 @@ import { ESLoadingResolver } from '../../index.js';
 import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
 
 
-const esGlobalModuleResolver = new ESLoadingResolver('js');
+const esGlobalModuleResolver = new ESLoadingResolver();
 
 let esLoadingResponse: IESLoadingResponse;
 
