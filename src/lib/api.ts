@@ -76,7 +76,7 @@ export class ESLoadingResolver {
             || this.extensionPattern.test(this.relativePath)
             ) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
-        } else {
+        } else if (!this.extensionPattern.test(this.relativePath)) {
             // aqui pode estar falando de um arquivo sem extensão informada - caso em que bastaria acrescentar a extensão - ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
             // if () {
             //     this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
@@ -85,6 +85,7 @@ export class ESLoadingResolver {
 
         // this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
 
+        // essa linha está errada
         // this.absolutePath = path.normalize(`${process.cwd()}/${relativeFileDirectory}`);
 
         // this.absoluteDirectory = path.dirname(this.absolutePath);
