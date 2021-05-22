@@ -51,6 +51,15 @@ export class ESLoadingResolver {
 
     }
 
+    private treatPath(path: string) {
+        return this.removeUnecessaryPathSeparator(path
+            // .replace(/(?:\\){2,}/g, '\\')
+            .replace(/(?:\\)/g, '/')
+            .replace(/(?:\.{3,}\/)+/g, '../')
+            .replace(/(?:\/){2,}/g, '/')
+            .replace(/(?:\.\/){2,}/, './'));
+    }
+
     private removeUnecessaryPathSeparator(path: string): string {
         return path
             // .replace(/(?:\\)/g, '/')
@@ -70,15 +79,9 @@ export class ESLoadingResolver {
         const relativeRootDirectory: string = path.relative(currentDirectory, process.cwd());
 
         const relativeDirectory: string = this
-            .removeUnecessaryPathSeparator(`${relativeRootDirectory}/${relativeFileDirectory}`
-                // .replace(/(?:\\){2,}/g, '\\')
-                .replace(/(?:\\)/g, '/')
-                .replace(/(?:\.{3,}\/)+/g, '../')
-                .replace(/(?:\/){2,}/g, '/')
-                .replace(/(?:\.\/){2,}/, './')
-            );
+            .treatPath(`${relativeRootDirectory}/${relativeFileDirectory}`);
 
-        const absoluteDirectory: string = path
+        let absoluteDirectory: string = path
             .normalize(this.removeUnecessaryPathSeparator(`${process.cwd()}/${relativeFileDirectory}`));
 
         let absolutePath4Test: string;
@@ -97,14 +100,16 @@ export class ESLoadingResolver {
                 this.absolutePath = absolutePath4Test;
                 this.relativePath = `${this.relativePath}.${this.fileExtension}`;
             } else {
-                // absolutePath está ERRADO, guardando QUEM CHAMOU ao invés de QUEM FOI CHAMADO
-                console.log('here')
+                absoluteDirectory = `${absoluteDirectory}/${this.relativePath}`;
+
                 this.absolutePath = path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
                 this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
             }
         }
 
         this.resolvedPath = this.removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
+
+        console.log(path.normalize('./folder/./subfolder'))
 
     }
 
