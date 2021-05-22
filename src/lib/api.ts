@@ -1,4 +1,4 @@
-import { ModuleTrackTrace as CallerFileTrackTrace} from '@actjs.on/module-track-trace';
+import { CallerFileTrackTrace } from '@actjs.on/caller-file-track-trace';
 
 import Path from 'path';
 import url from 'url';
