@@ -1,4 +1,4 @@
-export interface IESLoadingParameters {
+export interface IESLoadingOptions {
 
     fileExtension?: string;
 

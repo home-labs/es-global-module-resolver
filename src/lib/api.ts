@@ -5,9 +5,8 @@ import url from 'url';
 import { existsSync } from 'fs';
 
 
-import { IESLoadingParameters } from './i-es-loading-parameters';
+import { IESLoadingOptions } from './i-es-loading-options';
 import { IESLoadingResponse } from './i-es-loading-response';
-import { timeStamp } from 'console';
 
 
 // declare const Test: InstanceType<any>;
@@ -37,11 +36,11 @@ export class ESLoadingResolver {
 
     private resolvedPath!: string;
 
-    constructor(parameters: IESLoadingParameters) {
+    constructor(options?: IESLoadingOptions) {
 
-        this.fileExtension = parameters.fileExtension as string;
+        this.fileExtension = options?.fileExtension as string | 'mjs';
 
-        this.timeoutValue = parameters.timeoutValue as number;
+        this.timeoutValue = options?.timeoutValue as number | 0;
 
         this.indexPattern = new RegExp(/(\/index)$/);
 
@@ -87,7 +86,10 @@ export class ESLoadingResolver {
         if (this.indexPattern.test(this.relativePath)) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
         } else {
+            // aqui pode estar falando de um arquivo sem extensão ou de um diretório onde há um arquivo index com a extensão inicial informada
+            // if () {
 
+            // }
 
             // if (!this.extensionPattern.test(this.relativePath)) {
             //     this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
@@ -102,15 +104,16 @@ export class ESLoadingResolver {
     }
 
     // qualquer coisa usar só este daqui, o outro parece desnecessário
-    importModule(relativePath: string,
-        // fileExtension: string | number = 'js',
-        timeoutValue: number = 0): Promise<IESLoadingResponse> {
+    importModule(relativePath: string, options?: IESLoadingOptions
+        // , fileExtension: string | number = 'js',
+        // timeoutValue: number = 0
+    ): Promise<IESLoadingResponse> {
 
         this.relativePath = relativePath;
 
-        // this.fileExtension = fileExtension as string;
+        this.fileExtension = options?.fileExtension as string;
 
-        this.timeoutValue = timeoutValue;
+        this.timeoutValue = options?.timeoutValue as number;
 
         this.resolveArguments();
 
