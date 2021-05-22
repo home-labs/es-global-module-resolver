@@ -1,6 +1,6 @@
 import { ModuleTrackTrace as CallerFileTrackTrace} from '@actjs.on/module-track-trace';
 
-import path from 'path';
+import Path from 'path';
 import url from 'url';
 import { existsSync } from 'fs';
 
@@ -55,68 +55,95 @@ export class ESLoadingResolver {
         return path.replace(/(?:\\)/g, '/');
     }
 
-    private treatPath(path: string): string {
-        return this.removeUnecessaryPathSeparator(path
-            // .replace(/(?:\\){2,}/g, '\\')
-            .replace(/(?:\.{3,}\/)+/g, '../')
-            .replace(/(?:\/){2,}/g, '/')
-            .replace(/\/$/, '')
-            .replace(/(?:\.\/){2,}/, './'));
-    }
-
     private removeUnecessaryPathSeparator(path: string): string {
         return path
             // .replace(/(?:\\)/g, '/')
             .replace(/(?<=\b)(?:\/\.\/)+/g, '/');
     }
 
-    private resolveArguments() {
+    private treatPath(path: string): string {
+        return this.removeUnecessaryPathSeparator(path
+            // .replace(/(?:\\){2,}/g, '\\')
+            .replace(/(?:\.{3,}\/)/g, '../')
+            .replace(/(?:\/){2,}/g, '/')
+            .replace(/\/$/, '')
+            .replace(/(?:\.\/){2,}/, './'));
+    }
+
+    private removeFolders(path: string, count: number, pathSeparator?: string): string {
+
+        let splittedPath: string[];
+
+        if (!pathSeparator) {
+            pathSeparator = Path.sep;
+        }
+
+        splittedPath = path.split(pathSeparator);
+
+        return splittedPath.slice(0, splittedPath.length - count).join(pathSeparator);
+    }
+
+    private resolvePathData() {
+
+        const parentDirectoryPattern: RegExp = new RegExp(/^(\.\.\/)+/);
+
+        const currentDirectory: string = Path.dirname(url.fileURLToPath(import.meta.url));
+
+        const relativeRootDirectory: string = Path.relative(currentDirectory, process.cwd());
 
         const fileCallerURL: string = this.callerFileTrackTrace.getFileCallerURL();
 
-        const currentDirectory: string = path.dirname(url.fileURLToPath(import.meta.url));
+        let fileCallerDirectory: string = Path.dirname(url.fileURLToPath(fileCallerURL));
 
-        const fileCallerDirectory: string = path.dirname(url.fileURLToPath(fileCallerURL));
+        let parentFoldersCount: number;
 
-        const relativeFileDirectory: string = path.relative(process.cwd(), fileCallerDirectory);
+        let absolutePath4Test: string;
 
-        const relativeRootDirectory: string = path.relative(currentDirectory, process.cwd());
+        this.relativePath = this
+            .removeUnecessaryPathSeparator(this
+                .treatPath(this.convertPathSeparator(this.relativePath)));
+
+        if (parentDirectoryPattern.test(this.relativePath)) {
+            parentFoldersCount = this.relativePath.split('../').length - 1;
+
+            this.relativePath = this.relativePath.replace(parentDirectoryPattern, '');
+
+            fileCallerDirectory = this.removeFolders(fileCallerDirectory, parentFoldersCount);
+        }
+
+        const relativeFileDirectory: string = Path.relative(process.cwd(), fileCallerDirectory);
 
         const relativeDirectory: string = this
             .convertPathSeparator(`${relativeRootDirectory}/${relativeFileDirectory}`);
 
-        let absoluteDirectory: string = path
-            .normalize(`${process.cwd()}/${relativeFileDirectory}`);
-
-        let absolutePath4Test: string;
+        let absoluteDirectory: string = Path.resolve(relativeFileDirectory);
 
         if (this.indexPattern.test(this.relativePath)) {
-            this.absolutePath = path.normalize(this
-                .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this
+            this.absolutePath = Path.normalize(Path
+                .resolve(absoluteDirectory, `${this
                     .relativePath}.${this.fileExtension}`));
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
         } else if (this.extensionPattern.test(this.relativePath)) {
-            this.absolutePath = path.normalize(this
-                .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this.relativePath}`));
+            this.absolutePath = Path.normalize(Path
+                .resolve(absoluteDirectory, `${this.relativePath}`));
         } else {
-            absolutePath4Test = path.normalize(this
-                .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this
+            absolutePath4Test = Path.normalize(Path
+                .resolve(absoluteDirectory, `${this
                     .relativePath}.${this.fileExtension}`));
             if (existsSync(absolutePath4Test)) {
                 this.absolutePath = absolutePath4Test;
             } else {
-                absoluteDirectory = this.removeUnecessaryPathSeparator(`${absoluteDirectory}/${this.relativePath}`);
+                absoluteDirectory = Path.resolve(absoluteDirectory, `${this.relativePath}`);
 
-                this.absolutePath = path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
+                this.absolutePath = Path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
                 this.relativePath = `${this.relativePath}/index`;
             }
 
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
-
         }
 
-        this.resolvedPath = this.removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
-
+        this.resolvedPath = this
+            .removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
     }
 
     // qualquer coisa usar só este daqui, o outro parece desnecessário
@@ -125,15 +152,13 @@ export class ESLoadingResolver {
         // timeoutValue: number = 0
     ): Promise<IESLoadingResponse> {
 
-        this.relativePath = this
-            .removeUnecessaryPathSeparator(this
-                .treatPath(this.convertPathSeparator(relativePath)));
+        this.relativePath = relativePath;
 
         // this.fileExtension = options?.fileExtension as string;
 
         this.timeoutValue = options?.timeoutValue || this.timeoutValue;
 
-        this.resolveArguments();
+        this.resolvePathData();
 
         let countdown!: NodeJS.Timeout;
 
@@ -195,7 +220,7 @@ export class ESLoadingResolver {
 
         this.timeoutValue = timeoutValue;
 
-        this.resolveArguments();
+        this.resolvePathData();
 
         let countdown!: NodeJS.Timeout;
 
