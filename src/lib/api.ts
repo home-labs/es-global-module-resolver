@@ -76,8 +76,6 @@ export class ESLoadingResolver {
 
         let absolutePath4Test: string;
 
-        // não há como resolver o diretório absoluto sem resolver isso daqui
-        // console.log(!this.extensionPattern.test(this.relativePath))
         if (this.indexPattern.test(this.relativePath)
             || this.extensionPattern.test(this.relativePath)
             ) {
@@ -93,7 +91,7 @@ export class ESLoadingResolver {
             if (existsSync(absolutePath4Test)) {
                 this.absolutePath = absoluteDirectory4Test;
                 console.log(relativeDirectory)
-                // this.relativePath = `${this.relativePath}/${relativeDirectory}.${this.fileExtension}`;
+                // this.relativePath = ;
             }
         }
 
