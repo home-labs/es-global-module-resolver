@@ -9,10 +9,6 @@ import { IESLoadingOptions } from './i-es-loading-options';
 import { IESLoadingResponse } from './i-es-loading-response';
 
 
-// declare const Test: InstanceType<any>;
-// const test = new Test();
-
-
 export class ESLoadingResolver {
 
     private indexPattern: RegExp;
@@ -57,13 +53,11 @@ export class ESLoadingResolver {
 
     private removeUnecessaryPathSeparator(path: string): string {
         return path
-            // .replace(/(?:\\)/g, '/')
             .replace(/(?<=\b)(?:\/\.\/)+/g, '/');
     }
 
     private treatPath(path: string): string {
         return this.removeUnecessaryPathSeparator(path
-            // .replace(/(?:\\){2,}/g, '\\')
             .replace(/(?:\.{3,}\/)/g, '../')
             .replace(/(?:\/){2,}/g, '/')
             .replace(/\/$/, '')
@@ -146,15 +140,9 @@ export class ESLoadingResolver {
             .removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
     }
 
-    // qualquer coisa usar só este daqui, o outro parece desnecessário
-    importModule(relativePath: string, options?: IESLoadingOptions
-        // , fileExtension: string | number = 'js',
-        // timeoutValue: number = 0
-    ): Promise<IESLoadingResponse> {
+    importModule(relativePath: string, options?: IESLoadingOptions): Promise<IESLoadingResponse> {
 
         this.relativePath = relativePath;
-
-        // this.fileExtension = options?.fileExtension as string;
 
         this.timeoutValue = options?.timeoutValue || this.timeoutValue;
 
@@ -164,13 +152,11 @@ export class ESLoadingResolver {
 
         return new Promise(
             (
-                loadAccomplish: (response: IESLoadingResponse) => void,
-                loadReject: (r: any) => void
+                loadAccomplish: (esLoadingResponse: IESLoadingResponse) => void,
+                loadReject: (reason: any) => void
             ) => {
 
-                // console.log(`arrive here with directory ${this.absoluteDirectory}`)
-
-                // import without { ModuleDeclarion } from '...'; causes side-effects, so use it to load extensions of Built-in classes
+                // import without inform a default module from 'path'; causes side-effects, so use it to load extensions of Built-in classes
                 const importPromise: Promise<IESLoadingResponse> = import(this.resolvedPath);
 
                 if (this.timeoutValue) {
@@ -191,6 +177,12 @@ export class ESLoadingResolver {
                                 clearTimeout(countdown);
                             }
 
+                            if (Object.prototype.hasOwnProperty.call(response, 'default')) {
+                                response = (response as any).default;
+                            } else if (options?.moduleName) {
+                                response = response[options.moduleName];
+                            }
+
                             loadAccomplish(
                                 {
                                     default: response,
@@ -200,8 +192,8 @@ export class ESLoadingResolver {
                             this.loadedModulePaths.push(this.absolutePath);
                         }
                     ).catch(
-                        (r) => {
-                            loadReject(new Error(r));
+                        (reason: any) => {
+                            loadReject(new Error(reason));
                         }
                     );
 
@@ -209,60 +201,4 @@ export class ESLoadingResolver {
         );
     }
 
-    // For side-effects
-    load(relativePath: string,
-        fileExtension: string | number = 'js',
-        timeoutValue: number = 0): Promise<IESLoadingResponse> {
-
-        this.relativePath = relativePath;
-
-        this.fileExtension = fileExtension as string;
-
-        this.timeoutValue = timeoutValue;
-
-        this.resolvePathData();
-
-        let countdown!: NodeJS.Timeout;
-
-        return new Promise(
-            (loadAccomplish: (response: IESLoadingResponse) => void, loadReject: (r: any) => void) => {
-
-                // console.log(`arrive here with directory ${this.absoluteDirectory}`)
-                const importPromise: Promise<IESLoadingResponse> = import(this.resolvedPath);
-
-                if (this.timeoutValue) {
-                    countdown = setTimeout(
-                        () => {
-                            loadReject(
-                                new Error(`The time to load the module defined in "${this.absolutePath}" directory is over.`)
-                            );
-                        },
-                        this.timeoutValue
-                    );
-                }
-
-                importPromise
-                    .then(
-                        () => {
-                            if (countdown) {
-                                clearTimeout(countdown);
-                            }
-
-                            loadAccomplish(
-                                {
-                                    absoluteDirectory: this.absoluteDirectory
-                                }
-                            );
-                            this.loadedModulePaths.push(this.absolutePath);
-                        }
-                    ).catch(
-                        (r) => {
-                            loadReject(new Error(r));
-                        }
-                    );
-
-            }
-        );
-
-    }
 }
