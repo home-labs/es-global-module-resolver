@@ -3,6 +3,8 @@ import { ModuleTrackTrace as CallerFileTrackTrace} from '@actjs.on/module-track-
 import path from 'path';
 import url from 'url';
 
+import { IESLoadingResponse } from './i-es-loading-response';
+
 
 export class ESLoadingResolver {
 
@@ -21,6 +23,8 @@ export class ESLoadingResolver {
     private callerFileTrackTrace: CallerFileTrackTrace;
 
     private absolutePath!: string;
+
+    private absoluteDirectory!: string;
 
     private resolvedPath!: string;
 
@@ -42,18 +46,16 @@ export class ESLoadingResolver {
 
         const fileCallerDirectory: string = path.dirname(url.fileURLToPath(fileCallerURL));
 
-        const relativeModulePath: string = path.relative(process.cwd(), fileCallerDirectory);
+        const relativeFileDirectory: string = path.relative(process.cwd(), fileCallerDirectory);
 
-        const relativeRootPath = path.relative(currentDirectory, process.cwd());
+        const relativeRootDirectory = path.relative(currentDirectory, process.cwd());
 
-        const relativeDirectory = `${relativeRootPath}/${relativeModulePath}`
+        const relativeDirectory = `${relativeRootDirectory}/${relativeFileDirectory}`
             .replace(/(?:\\)/g, '/')
             .replace(/(?:\/){2,}/g, '/')
             .replace(/(?:\.{3,}\/)+/g, '../')
             .replace(/(?:\.\/){2,}/, './')
             .replace(/(?<=\b)(?:\.\/)+/g, '/');
-
-        this.absolutePath = path.normalize(`${process.cwd()}/${relativeModulePath}`);
 
         this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
 
@@ -62,22 +64,89 @@ export class ESLoadingResolver {
             this.fileExtension = 'js';
         }
 
+        // console.log(this.absolutePath)
+        // console.log(this.absoluteDirectory)
+
+        // console.log(!this.extensionPattern.test(this.relativePath))
         if (this.indexPattern.test(this.relativePath)) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
         } else if (!this.extensionPattern.test(this.relativePath)) {
             this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
         }
 
+        // this.absolutePath = path.normalize(`${process.cwd()}/${relativeFileDirectory}`);
+
+        // this.absoluteDirectory = path.dirname(this.absolutePath);
+        console.log(this.relativePath)
+
     }
 
-    // load(): Promise<void> {
+    // qualquer coisa usar só este daqui, o outro parece desnecessário
+    importModule(relativePath: string,
+        fileExtension: string | number = 'js',
+        timeoutValue: number = 0): Promise<IESLoadingResponse> {
 
-    // }
+        this.relativePath = relativePath;
+
+        this.fileExtension = fileExtension as string;
+
+        this.timeoutValue = timeoutValue;
+
+        this.resolveArguments();
+
+        let countdown!: NodeJS.Timeout;
+
+        return new Promise(
+            (
+                loadAccomplish: (response: IESLoadingResponse) => void,
+                loadReject: (r: any) => void
+            ) => {
+
+                // console.log(`arrive here with directory ${this.absoluteDirectory}`)
+
+                // import without { ModuleDeclarion } from '...'; causes side-effects, so use it to load extensions of Built-in classes
+                const importPromise: Promise<IESLoadingResponse> = import(this.resolvedPath);
+
+                if (this.timeoutValue) {
+                    countdown = setTimeout(
+                        () => {
+                            loadReject(
+                                new Error(`The time to load the module defined in "${this.absolutePath}" directory is over.`)
+                            );
+                        },
+                        this.timeoutValue
+                    );
+                }
+
+                importPromise
+                    .then(
+                        (response: any) => {
+                            if (countdown) {
+                                clearTimeout(countdown);
+                            }
+
+                            loadAccomplish(
+                                {
+                                    default: response,
+                                    absoluteDirectory: this.absolutePath
+                                }
+                            );
+                            this.loadedModulePaths.push(this.absolutePath);
+                        }
+                    ).catch(
+                        (r) => {
+                            loadReject(new Error(r));
+                        }
+                    );
+
+            }
+        );
+    }
 
     // For side-effects
-    loadGlobal(relativePath: string,
+    load(relativePath: string,
         fileExtension: string | number = 'js',
-        timeoutValue: number = 0): Promise<any> {
+        timeoutValue: number = 0): Promise<string> {
 
         this.relativePath = relativePath;
 
@@ -92,7 +161,7 @@ export class ESLoadingResolver {
         return new Promise(
             (loadAccomplish: (response: string) => void, loadReject: (r: any) => void) => {
 
-                // console.log(`arrive here with relative path: ${this.resolvedPath}`)
+                // console.log(`arrive here with directory ${this.absoluteDirectory}`)
                 const importPromise: Promise<void> = import(this.resolvedPath);
 
                 if (this.timeoutValue) {

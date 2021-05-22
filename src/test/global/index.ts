@@ -3,19 +3,18 @@
 
 import { ESLoadingResolver } from '../../index.js';
 
+import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
+
 
 const esGlobalModuleResolver = new ESLoadingResolver();
 
-let resolvedDirectory: string;
+let resolvedDirectory: IESLoadingResponse;
 
 try {
-    resolvedDirectory = await esGlobalModuleResolver.loadGlobal('./number-extension.js', 8);
-    // resolvedDirectory = await esGlobalModuleResolver.load('./number-extension.js', 2);
+    resolvedDirectory = await esGlobalModuleResolver.importModule('./number-extension', 8);
+    // resolvedDirectory = await esGlobalModuleResolver.importModule('./number-extension', 2);
 
-    // resolvedDirectory = await esGlobalModuleResolver.load('./number-extension/index');
-    // resolvedDirectory = await esGlobalModuleResolver.load('./number-extension/index.js');
-
-    console.log(`\nResolved directory: `, resolvedDirectory);
+    console.log(`\nResolved directory: `, resolvedDirectory.absoluteDirectory);
     console.log(`\n`);
 } catch (r) {
     console.log(`\n`);
