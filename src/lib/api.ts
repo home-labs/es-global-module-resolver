@@ -52,7 +52,9 @@ export class ESLoadingResolver {
     }
 
     private removeUnecessaryPathSeparator(path: string): string {
-        return path.replace(/(?<=\b)(?:\/\.\/)+/g, '/');
+        return path
+            // .replace(/(?:\\)/g, '/')
+            .replace(/(?<=\b)(?:\/\.\/)+/g, '/');
     }
 
     private resolveArguments() {
@@ -69,39 +71,42 @@ export class ESLoadingResolver {
 
         const relativeDirectory: string = this
             .removeUnecessaryPathSeparator(`${relativeRootDirectory}/${relativeFileDirectory}`
+                // .replace(/(?:\\){2,}/g, '\\')
                 .replace(/(?:\\)/g, '/')
                 .replace(/(?:\.{3,}\/)+/g, '../')
                 .replace(/(?:\/){2,}/g, '/')
                 .replace(/(?:\.\/){2,}/, './')
             );
 
-        const absoluteDirectory4Test: string = path
+        const absoluteDirectory: string = path
             .normalize(this.removeUnecessaryPathSeparator(`${process.cwd()}/${relativeFileDirectory}`));
 
         let absolutePath4Test: string;
 
-        if (this.indexPattern.test(this.relativePath)
-            || this.extensionPattern.test(this.relativePath)
-            ) {
+        if (this.indexPattern.test(this.relativePath)) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
-            // o index.alguma não vem pra cá por causa do teste this.extensionPattern.test(this.relativePath)
-        // } else {
-        } else if (!this.extensionPattern.test(this.relativePath)) {
+            this.absolutePath = path.normalize(`${absoluteDirectory}/${this.relativePath}.${this.fileExtension}`);
+        } else if (this.extensionPattern.test(this.relativePath)) {
+            this.absolutePath = path.normalize(`${absoluteDirectory}/${this.relativePath}`);
+        } else {
             // aqui pode estar falando de um arquivo sem extensão informada - caso em que bastaria acrescentar a extensão - ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
-            absolutePath4Test = path
-                .normalize(this.removeUnecessaryPathSeparator(`${absoluteDirectory4Test}/${this.relativePath}.${this.fileExtension}`));
 
+            absolutePath4Test = path.normalize(this
+                .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this
+                    .relativePath}.${this.fileExtension}`));
             if (existsSync(absolutePath4Test)) {
-                this.absolutePath = absoluteDirectory4Test;
+                this.absolutePath = absolutePath4Test;
                 this.relativePath = `${this.relativePath}.${this.fileExtension}`;
             } else {
+                this.absolutePath = `${absoluteDirectory}/index.${this.fileExtension}`;
                 this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
             }
         }
 
         this.resolvedPath = this.removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
+        console.log(this.absolutePath)
 
-        this.absoluteDirectory = path.dirname(this.absolutePath);
+        // this.absoluteDirectory = path.dirname(this.absolutePath);
 
     }
 
