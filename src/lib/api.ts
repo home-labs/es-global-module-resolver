@@ -84,13 +84,12 @@ export class ESLoadingResolver {
         let absolutePath4Test: string;
 
         if (this.indexPattern.test(this.relativePath)) {
+            this.absolutePath = path
+                .normalize(`${absoluteDirectory}/${this.relativePath}.${this.fileExtension}`);
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
-            this.absolutePath = path.normalize(`${absoluteDirectory}/${this.relativePath}.${this.fileExtension}`);
         } else if (this.extensionPattern.test(this.relativePath)) {
             this.absolutePath = path.normalize(`${absoluteDirectory}/${this.relativePath}`);
         } else {
-            // aqui pode estar falando de um arquivo sem extensão informada - caso em que bastaria acrescentar a extensão - ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
-
             absolutePath4Test = path.normalize(this
                 .removeUnecessaryPathSeparator(`${absoluteDirectory}/${this
                     .relativePath}.${this.fileExtension}`));
@@ -98,15 +97,14 @@ export class ESLoadingResolver {
                 this.absolutePath = absolutePath4Test;
                 this.relativePath = `${this.relativePath}.${this.fileExtension}`;
             } else {
-                this.absolutePath = `${absoluteDirectory}/index.${this.fileExtension}`;
+                // absolutePath está ERRADO, guardando QUEM CHAMOU ao invés de QUEM FOI CHAMADO
+                console.log('here')
+                this.absolutePath = path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
                 this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
             }
         }
 
         this.resolvedPath = this.removeUnecessaryPathSeparator(`${relativeDirectory}/${this.relativePath}`);
-        console.log(this.absolutePath)
-
-        // this.absoluteDirectory = path.dirname(this.absolutePath);
 
     }
 
