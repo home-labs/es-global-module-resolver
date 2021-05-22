@@ -5,7 +5,14 @@ import url from 'url';
 import { existsSync } from 'fs';
 
 
+import { IESLoadingParameters } from './i-es-loading-parameters';
 import { IESLoadingResponse } from './i-es-loading-response';
+import { timeStamp } from 'console';
+
+
+// declare const Test: InstanceType<any>;
+
+// const test = new Test();
 
 
 export class ESLoadingResolver {
@@ -18,9 +25,9 @@ export class ESLoadingResolver {
 
     private relativePath!: string;
 
-    private timeoutValue!: number;
+    private timeoutValue: number;
 
-    private fileExtension!: string;
+    private fileExtension: string;
 
     private callerFileTrackTrace: CallerFileTrackTrace;
 
@@ -30,7 +37,12 @@ export class ESLoadingResolver {
 
     private resolvedPath!: string;
 
-    constructor() {
+    constructor(parameters: IESLoadingParameters) {
+
+        this.fileExtension = parameters.fileExtension as string;
+
+        this.timeoutValue = parameters.timeoutValue as number;
+
         this.indexPattern = new RegExp(/(\/index)$/);
 
         this.extensionPattern = new RegExp(/(\.(?:[^\/:*?"<>|]+))$/);
@@ -38,6 +50,7 @@ export class ESLoadingResolver {
         this.loadedModulePaths = [];
 
         this.callerFileTrackTrace = new CallerFileTrackTrace();
+
     }
 
     private resolveArguments() {
@@ -61,10 +74,10 @@ export class ESLoadingResolver {
 
         this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
 
-        if (typeof this.fileExtension === 'number') {
-            this.timeoutValue = this.fileExtension;
-            this.fileExtension = 'js';
-        }
+        // if (typeof this.fileExtension === 'number') {
+        //     this.timeoutValue = this.fileExtension;
+        //     this.fileExtension = 'js';
+        // }
 
         // console.log(this.absolutePath)
         // console.log(this.absoluteDirectory)
@@ -90,12 +103,12 @@ export class ESLoadingResolver {
 
     // qualquer coisa usar só este daqui, o outro parece desnecessário
     importModule(relativePath: string,
-        fileExtension: string | number = 'js',
+        // fileExtension: string | number = 'js',
         timeoutValue: number = 0): Promise<IESLoadingResponse> {
 
         this.relativePath = relativePath;
 
-        this.fileExtension = fileExtension as string;
+        // this.fileExtension = fileExtension as string;
 
         this.timeoutValue = timeoutValue;
 
