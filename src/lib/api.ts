@@ -10,7 +10,6 @@ import { IESLoadingResponse } from './i-es-loading-response';
 
 
 // declare const Test: InstanceType<any>;
-
 // const test = new Test();
 
 
@@ -36,11 +35,11 @@ export class ESLoadingResolver {
 
     private resolvedPath!: string;
 
-    constructor(options?: IESLoadingOptions) {
+    constructor(fileExtension?: string, options?: IESLoadingOptions) {
 
-        this.fileExtension = options?.fileExtension as string | 'mjs';
+        this.fileExtension = fileExtension || 'mjs';
 
-        this.timeoutValue = options?.timeoutValue as number | 0;
+        this.timeoutValue = options?.timeoutValue || 0;
 
         this.indexPattern = new RegExp(/(\/index)$/);
 
@@ -62,34 +61,46 @@ export class ESLoadingResolver {
 
         const relativeFileDirectory: string = path.relative(process.cwd(), fileCallerDirectory);
 
-        const relativeRootDirectory = path.relative(currentDirectory, process.cwd());
+        const relativeRootDirectory: string = path.relative(currentDirectory, process.cwd());
 
-        const relativeDirectory = `${relativeRootDirectory}/${relativeFileDirectory}`
+        const relativeDirectory: string = `${relativeRootDirectory}/${relativeFileDirectory}`
             .replace(/(?:\\)/g, '/')
-            .replace(/(?:\/){2,}/g, '/')
             .replace(/(?:\.{3,}\/)+/g, '../')
+            .replace(/(?:\/){2,}/g, '/')
             .replace(/(?:\.\/){2,}/, './')
-            .replace(/(?<=\b)(?:\.\/)+/g, '/');
+            .replace(/(?<=\b)(?:\/\.\/)+/g, '/');
 
+        const absoluteDirectory4Test: string = path
+            .normalize(`${process.cwd()}/${relativeFileDirectory}`
+                .replace(/(?<=\b)(?:\/\.\/)+/g, '/'));
+
+        let absolutePath4Test: string;
+
+        // não há como resolver o diretório absoluto sem resolver isso daqui
         // console.log(!this.extensionPattern.test(this.relativePath))
         if (this.indexPattern.test(this.relativePath)
             || this.extensionPattern.test(this.relativePath)
             ) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
+            // o index.alguma não vem pra cá por causa do teste this.extensionPattern.test(this.relativePath)
+        // } else {
         } else if (!this.extensionPattern.test(this.relativePath)) {
             // aqui pode estar falando de um arquivo sem extensão informada - caso em que bastaria acrescentar a extensão - ou de um diretório onde há um arquivo index com a extensão informada no método ou no constructor
-            // if () {
-            //     this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
-            // }
+            absolutePath4Test = path
+                .normalize(`${absoluteDirectory4Test}/${this.relativePath}.${this.fileExtension}`
+                    .replace(/(?<=\b)(?:\/\.\/)+/g, '/'));
+
+            if (existsSync(absolutePath4Test)) {
+                this.absolutePath = absoluteDirectory4Test;
+                console.log(relativeDirectory)
+                // this.relativePath = `${this.relativePath}/${relativeDirectory}.${this.fileExtension}`;
+            }
         }
 
-        // this.resolvedPath = `${relativeDirectory}/${this.relativePath}`;
+        this.resolvedPath = `${relativeDirectory}/${this.relativePath}`
+            .replace(/(?<=\b)(?:\/\.\/)+/g, '/');
 
-        // essa linha está errada
-        // this.absolutePath = path.normalize(`${process.cwd()}/${relativeFileDirectory}`);
-
-        // this.absoluteDirectory = path.dirname(this.absolutePath);
-        console.log(this.relativePath)
+        this.absoluteDirectory = path.dirname(this.absolutePath);
 
     }
 
@@ -101,9 +112,9 @@ export class ESLoadingResolver {
 
         this.relativePath = relativePath;
 
-        this.fileExtension = options?.fileExtension as string;
+        // this.fileExtension = options?.fileExtension as string;
 
-        this.timeoutValue = options?.timeoutValue as number;
+        this.timeoutValue = options?.timeoutValue || this.timeoutValue;
 
         this.resolveArguments();
 
