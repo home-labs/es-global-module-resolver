@@ -2,6 +2,8 @@ import { ModuleTrackTrace as CallerFileTrackTrace} from '@actjs.on/module-track-
 
 import path from 'path';
 import url from 'url';
+import { existsSync } from 'fs';
+
 
 import { IESLoadingResponse } from './i-es-loading-response';
 
@@ -68,10 +70,15 @@ export class ESLoadingResolver {
         // console.log(this.absoluteDirectory)
 
         // console.log(!this.extensionPattern.test(this.relativePath))
+        // testar
         if (this.indexPattern.test(this.relativePath)) {
             this.relativePath = `${this.relativePath}.${this.fileExtension}`;
-        } else if (!this.extensionPattern.test(this.relativePath)) {
-            this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
+        } else {
+
+
+            // if (!this.extensionPattern.test(this.relativePath)) {
+            //     this.relativePath = `${this.relativePath}/index.${this.fileExtension}`;
+            // }
         }
 
         // this.absolutePath = path.normalize(`${process.cwd()}/${relativeFileDirectory}`);
@@ -146,7 +153,7 @@ export class ESLoadingResolver {
     // For side-effects
     load(relativePath: string,
         fileExtension: string | number = 'js',
-        timeoutValue: number = 0): Promise<string> {
+        timeoutValue: number = 0): Promise<IESLoadingResponse> {
 
         this.relativePath = relativePath;
 
@@ -159,10 +166,10 @@ export class ESLoadingResolver {
         let countdown!: NodeJS.Timeout;
 
         return new Promise(
-            (loadAccomplish: (response: string) => void, loadReject: (r: any) => void) => {
+            (loadAccomplish: (response: IESLoadingResponse) => void, loadReject: (r: any) => void) => {
 
                 // console.log(`arrive here with directory ${this.absoluteDirectory}`)
-                const importPromise: Promise<void> = import(this.resolvedPath);
+                const importPromise: Promise<IESLoadingResponse> = import(this.resolvedPath);
 
                 if (this.timeoutValue) {
                     countdown = setTimeout(
@@ -182,7 +189,11 @@ export class ESLoadingResolver {
                                 clearTimeout(countdown);
                             }
 
-                            loadAccomplish(this.absolutePath);
+                            loadAccomplish(
+                                {
+                                    absoluteDirectory: this.absoluteDirectory
+                                }
+                            );
                             this.loadedModulePaths.push(this.absolutePath);
                         }
                     ).catch(
