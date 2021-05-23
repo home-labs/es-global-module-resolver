@@ -27,9 +27,9 @@ try {
 
     console.log(`\nResolved directory: `, resolvedDirectory.absoluteDirectory);
     console.log(`\n`);
-} catch (r) {
+} catch (reason: any) {
     console.log(`\n`);
-    console.log(r);
+    console.log(reason);
     console.log(`\n`);
 }
 
