@@ -1,7 +1,7 @@
-export interface IESLoadingResponse {
-
-    default?: any;
+export type IESLoadingResponse = {
 
     absoluteDirectory: string;
+
+    default?: any;
 
 }

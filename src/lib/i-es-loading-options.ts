@@ -1,7 +1,9 @@
-export interface IESLoadingOptions {
+export type IESLoadingOptions = {
 
-    timeoutValue?: number;
+    timeoutValue: number;
 
-    moduleName?: string;
+    moduleData?: {
+        accessorSymbol: symbol,
+    };
 
 }

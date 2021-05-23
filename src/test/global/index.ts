@@ -20,7 +20,7 @@ try {
         // .import('./number-extension.js',
         // .import('./number-extension',
     {
-            timeoutValue: 8
+            timeoutValue: 11
             // timeoutValue: 2
         }
     );

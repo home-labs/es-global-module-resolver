@@ -2,13 +2,20 @@ import { ESLoadingResolver } from '../../index.js';
 
 import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
 
+import { IESTestModule } from './i-es-test-module';
+
 
 const esGlobalModuleResolver = new ESLoadingResolver();
 
 let esLoadingResponse: IESLoadingResponse;
 
-// for autocomplete purpose create a interface and import it here to use as type
-let ESTestModule;
+let ESTestModule: IESTestModule;
+
+// Template Design Pattern
+let esTestModule: IESTestModule;
+
+
+const esTestModuleSymbol: symbol = Symbol();
 
 
 try {
@@ -19,18 +26,24 @@ try {
         // .import('./number-extension-by-folder/index',
         // .import('./number-extension.js',
         // .import('./number-extension',
-        {
-            moduleName: 'ESTestModule',
+            {
+                moduleData: {
+                    [esTestModuleSymbol]: 'ESTestModule',
+                    accessorSymbol: esTestModuleSymbol
+                },
 
-            timeoutValue: 8
-            // timeoutValue: 2
-        }
-    );
+                timeoutValue: 11
+                // timeoutValue: 1
+            }
+        );
 
     console.log(`\nResolved directory: `, esLoadingResponse.absoluteDirectory);
     console.log(`\n`);
-    ESTestModule = esLoadingResponse.default;
-    console.log(`Module declaration: `, new ESTestModule());
+    // ESTestModule = esLoadingResponse.default;
+    ESTestModule = (esLoadingResponse as any)[esTestModuleSymbol];
+    // console.log(esLoadingResponse)
+    esTestModule = new (ESTestModule as any)();
+    esTestModule.printATestMessage();
     console.log(`\n`);
 } catch (r) {
     console.log(`\n`);

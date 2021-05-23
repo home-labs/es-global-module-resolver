@@ -148,7 +148,29 @@ export class ESLoadingResolver {
 
         this.resolvePathData();
 
+        const accomplishData: IESLoadingResponse = {
+            absoluteDirectory: ''
+        };
+
         let countdown!: NodeJS.Timeout;
+
+        let moduleName: string | undefined;
+
+        let rejectMessage: string;
+
+        if (Object.prototype.hasOwnProperty.call(options, 'moduleData')
+            && Object.prototype.hasOwnProperty
+                .call(options?.moduleData, (options as any).moduleData.accessorSymbol)) {
+
+            moduleName = (options as any).moduleData[(options as any)
+                .moduleData.accessorSymbol];
+        }
+
+        if (moduleName) {
+            rejectMessage = `The time to load the module "${moduleName}" defined in "${this.absolutePath}" directory is over.`;
+        } else {
+            rejectMessage = `The time to load the module defined in "${this.absolutePath}" directory is over.`;
+        }
 
         return new Promise(
             (
@@ -163,7 +185,7 @@ export class ESLoadingResolver {
                     countdown = setTimeout(
                         () => {
                             loadReject(
-                                new Error(`The time to load the module defined in "${this.absolutePath}" directory is over.`)
+                                new Error(rejectMessage)
                             );
                         },
                         this.timeoutValue
@@ -173,22 +195,24 @@ export class ESLoadingResolver {
                 importPromise
                     .then(
                         (response: any) => {
+
                             if (countdown) {
                                 clearTimeout(countdown);
                             }
 
                             if (Object.prototype.hasOwnProperty.call(response, 'default')) {
                                 response = (response as any).default;
-                            } else if (options?.moduleName) {
-                                response = response[options.moduleName];
+                                accomplishData.default = response;
+                            } else if (moduleName) {
+                                response = response[moduleName];
+
+                                (accomplishData as any)[(options as any)
+                                    .moduleData.accessorSymbol] = response;
                             }
 
-                            loadAccomplish(
-                                {
-                                    default: response,
-                                    absoluteDirectory: this.absolutePath
-                                }
-                            );
+                            accomplishData.absoluteDirectory = this.absolutePath;
+
+                            loadAccomplish(accomplishData);
                             this.loadedModulePaths.push(this.absolutePath);
                         }
                     ).catch(
