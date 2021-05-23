@@ -158,7 +158,8 @@ export class ESLoadingResolver {
 
         let rejectMessage: string;
 
-        if (Object.prototype.hasOwnProperty.call(options, 'moduleData')
+        if (options
+            && Object.prototype.hasOwnProperty.call(options, 'moduleData')
             && Object.prototype.hasOwnProperty
                 .call(options?.moduleData, (options as any).moduleData.accessorSymbol)) {
 
