@@ -1,16 +1,11 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "rootDir": "./",
     "composite": true,
     "resolveJsonModule": false,
-    "rootDir": "./",
     "module": "ESNext",
-    "target": "ES2020",
-    "lib": [
-      // "ES6",
-    ]
-    , "allowJs": true
-    , "allowUmdGlobalAccess": true
+    "target": "ES2020"
   }
   , "include": [
     "lib/**/*",
