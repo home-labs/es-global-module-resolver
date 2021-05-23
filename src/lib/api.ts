@@ -169,7 +169,7 @@ export class ESLoadingResolver {
         if (moduleName) {
             rejectMessage = `The time to load the module "${moduleName}" defined in "${this.absolutePath}" directory is over.`;
         } else {
-            rejectMessage = `The time to load the module defined in "${this.absolutePath}" directory is over.`;
+            rejectMessage = `The time to load the file "${this.absolutePath}" is over.`;
         }
 
         return new Promise(
