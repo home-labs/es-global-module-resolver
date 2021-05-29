@@ -8,7 +8,7 @@ import { IESLoadingOptions } from '../i-es-loading-options';
 import { IESLoadingResponse } from '../i-es-loading-response';
 
 
-export class ESLoadingResolver {
+export class ESWebLoadingResolver {
 
     private indexPattern: RegExp;
 

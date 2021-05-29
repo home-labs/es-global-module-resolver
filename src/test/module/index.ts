@@ -7,6 +7,8 @@ import { IESTestModule } from './i-es-test-module';
 
 const esGlobalModuleResolver = new ESLoadingResolver();
 
+const esTestModuleSymbol: symbol = Symbol();
+
 let esLoadingResponse: IESLoadingResponse;
 
 let ESTestModule: IESTestModule;
@@ -15,17 +17,9 @@ let ESTestModule: IESTestModule;
 let esTestModule: IESTestModule;
 
 
-const esTestModuleSymbol: symbol = Symbol();
-
-
 try {
     esLoadingResponse = await esGlobalModuleResolver
-        // .import('../global-number-extension-by-parent-folder',
         .import('./es-test-module',
-        // .import('./number-extension-by-folder/index.js',
-        // .import('./number-extension-by-folder/index',
-        // .import('./number-extension.js',
-        // .import('./number-extension',
             {
                 moduleData: {
                     [esTestModuleSymbol]: 'ESTestModule',

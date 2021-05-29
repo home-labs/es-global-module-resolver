@@ -1,18 +1,18 @@
 /// <reference path="./number-extension-by-folder/index.ts" />
 
 
-import { ESLoadingResolver } from '../../../local/index.js';
+import { ESWebLoadingResolver } from '../../../web/index.js';
 
 import { IESLoadingResponse } from '../../../lib/i-es-loading-response.js';
 
 
-const esGlobalModuleResolver = new ESLoadingResolver();
+const esWebLoadingResolver = new ESWebLoadingResolver();
 
 let resolvedDirectory: IESLoadingResponse;
 
 
 try {
-    resolvedDirectory = await esGlobalModuleResolver
+    resolvedDirectory = await esWebLoadingResolver
         // voltar com a lógica anterior. Para este caso ele deve entender que há uma pasta com um arquivo index.js, se quiser referenciar um arquivo com nome diferente de index não deve suprimir a extensão do arquivo
         .import('../../global-number-extension-by-parent-folder',
         // .import('./number-extension-by-folder',
