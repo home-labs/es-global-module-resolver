@@ -1,9 +1,9 @@
-/// <reference path="./number-extension-by-folder/index.ts" />
+/// <reference path="../number-extension-by-folder/index.ts" />
 
 
-import { ESLoadingResolver } from '../../index.js';
+import { ESLoadingResolver } from '../../../local/index.js';
 
-import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
+import { IESLoadingResponse } from '../../../lib/i-es-loading-response.js';
 
 
 const esGlobalModuleResolver = new ESLoadingResolver();
@@ -13,7 +13,7 @@ let resolvedDirectory: IESLoadingResponse;
 
 try {
     resolvedDirectory = await esGlobalModuleResolver
-        .import('../global-number-extension-by-parent-folder',
+        .import('../../global-number-extension-by-parent-folder',
         // .import('./number-extension-by-folder',
         // .import('./number-extension-by-folder/index.js',
         // .import('./number-extension-by-folder/index',

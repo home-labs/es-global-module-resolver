@@ -5,8 +5,8 @@ import url from 'url';
 import { existsSync } from 'fs';
 
 
-import { IESLoadingOptions } from './i-es-loading-options';
-import { IESLoadingResponse } from './i-es-loading-response';
+import { IESLoadingOptions } from '../i-es-loading-options';
+import { IESLoadingResponse } from '../i-es-loading-response';
 
 
 export class ESLoadingResolver {
