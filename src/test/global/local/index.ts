@@ -1,4 +1,4 @@
-/// <reference path="../number-extension-by-folder/index.ts" />
+/// <reference path="../web/number-extension-by-folder/index.ts" />
 
 
 import { ESLoadingResolver } from '../../../local/index.js';
