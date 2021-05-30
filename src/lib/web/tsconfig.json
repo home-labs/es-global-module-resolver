@@ -1,4 +1,4 @@
-// talvez esse tsconfig tenha de ficar na pasta src/web ao invés de src/lib/web
+// talvez esse tsconfig tenha de ficar na pasta src/web ao invés de src/lib/web por causa da geração do tsconfig.tsbuildinfo. Só subindo esta biblioteca e testando pra ver
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
