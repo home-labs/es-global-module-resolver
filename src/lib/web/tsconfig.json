@@ -1,42 +1,28 @@
+// talvez esse tsconfig tenha de ficar na pasta src/web ao invés de src/lib/web
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    // de onde eu quero que ele comece a buscar as pastas
+    // de onde eu quero que ele comece a plotar os paths
     "rootDir": "../../",
-    "outDir": "../../../dist/@actjs.on/es-loading-resolver/"
+    "outDir": "../../../dist/@actjs.on/es-loading-resolver"
   }
   , "include": [
-    // "src/web/**/*",
-    // "../../web/**/*",
-    "../abstract-es-loading-resolver.ts",
-    "../i-es-loading-options.ts",
-    "../i-es-loading-response.ts",
-    // "./test/global/web/**/*",
-    // "./test/global-number-extension-by-parent-folder",
-    // "web/**/*",
-
-    // "src/lib/web/**/*",
-    // "src/lib/abstract-es-loading-resolver.ts",
-    // "src/lib/i-es-loading-options.ts",
-    // "src/lib/i-es-loading-response.ts",
-    // "src/test/global/web/**/*",
-    // "src/test/global-number-extension-by-parent-folder",
-    // "src/web/**/*",
-
-    "api.ts"
+    "api.ts",
+    "../../test/global/web/**/*",
+    "../../web/**/*"
   ]
-  // , "references": [
-  //   {
-  //     "path": "../../tsconfig.base.json"
-  //   }
-  // ]
-  // , "paths": {
-  //   "@actjs.on/es-loading-resolver/web": [
-  //     "dist/@actjs.on/es-loading-resolver/web"
-  //   ],
-  //   "@actjs.on/es-loading-resolver/web/*": [
-  //     "dist/@actjs.on/es-loading-resolver/web/*"
-  //   ]
-  // }
+  // para carregar bibliotecas comuns
+  , "references": [
+    {
+      "path": "../../tsconfig.base.json"
+    }
+  ]
+  , "paths": {
+    "@actjs.on/es-loading-resolver/web": [
+      "../../../dist/@actjs.on/es-loading-resolver/web"
+    ],
+    "@actjs.on/es-loading-resolver/web/*": [
+      "../../../dist/@actjs.on/es-loading-resolver/web/*"
+    ]
+  }
 }
-// quando der problema com .tsbuildinfo apague a pasta dist

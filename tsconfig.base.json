@@ -9,7 +9,6 @@
     "declaration": true,
     "declarationMap": true,
     "moduleResolution": "node",
-    // "rootDir": "./",
     "baseUrl": "./",
     "sourceMap": true
     , "paths": {
