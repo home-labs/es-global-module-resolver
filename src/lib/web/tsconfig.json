@@ -1,16 +1,16 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    // "rootDir": "./",
-    "rootDir": "../../../",
-    "outDir": "../../../dist/@actjs.on/es-loading-resolver/web"
-    // "baseUrl": "../../",
+    // de onde eu quero que ele comece a buscar as pastas
+    "rootDir": "../../",
+    "outDir": "../../../dist/@actjs.on/es-loading-resolver/"
   }
   , "include": [
-    "lib/web/**/*",
-    "lib/abstract-es-loading-resolver.ts",
-    "lib/i-es-loading-options.ts",
-    "lib/i-es-loading-response.ts",
+    // "src/web/**/*",
+    // "../../web/**/*",
+    "../abstract-es-loading-resolver.ts",
+    "../i-es-loading-options.ts",
+    "../i-es-loading-response.ts",
     // "./test/global/web/**/*",
     // "./test/global-number-extension-by-parent-folder",
     // "web/**/*",
@@ -23,14 +23,13 @@
     // "src/test/global-number-extension-by-parent-folder",
     // "src/web/**/*",
 
-    // "api.ts"
+    "api.ts"
   ]
-  , "references": [
-    {
-      // tem de ter por causa
-      "path": "../../tsconfig.base.json"
-    }
-  ]
+  // , "references": [
+  //   {
+  //     "path": "../../tsconfig.base.json"
+  //   }
+  // ]
   // , "paths": {
   //   "@actjs.on/es-loading-resolver/web": [
   //     "dist/@actjs.on/es-loading-resolver/web"

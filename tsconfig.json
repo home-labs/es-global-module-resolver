@@ -6,8 +6,8 @@
     "outDir": "dist/@actjs.on/es-loading-resolver"
   },
   "references": [
-    {"path": "./src"}
-    // , {"path": "./src/lib/web"}
+    // {"path": "./src"}
+    {"path": "./src/lib/web"}
   ],
   "include": [
     "package.json"
