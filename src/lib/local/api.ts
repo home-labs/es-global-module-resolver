@@ -4,14 +4,13 @@ import Path from 'path';
 import url from 'url';
 import { existsSync } from 'fs';
 
-
-import { IESLoadingOptions } from '../i-es-loading-options';
 import { AbstractESLoadingResolver } from '../abstract-es-loading-resolver.js';
+import { IESLoadingOptions } from '../i-es-loading-options';
 
 
 export class ESLoadingResolver extends AbstractESLoadingResolver {
 
-    protected callerFileTrackTrace: CallerFileTrackTrace;
+    private callerFileTrackTrace: CallerFileTrackTrace;
 
     private absolutePath!: string;
 

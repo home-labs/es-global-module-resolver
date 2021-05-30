@@ -12,8 +12,6 @@ export abstract class AbstractESLoadingResolver {
 
     protected fileExtension: string;
 
-    protected absoluteDirectory!: string;
-
     private timeoutValue: number;
 
     private loadedModulePaths: string[];
@@ -71,7 +69,7 @@ export abstract class AbstractESLoadingResolver {
         const resolvedPath: string = this.resolvePathData(relativePath);
 
         const accomplishData: IESLoadingResponse = {
-            absoluteDirectory: ''
+            absolutePath: ''
         };
 
         let countdown!: NodeJS.Timeout;
@@ -136,7 +134,7 @@ export abstract class AbstractESLoadingResolver {
                                     .moduleData.accessorSymbol] = response;
                             }
 
-                            accomplishData.absoluteDirectory = this.getAbsolutePath();
+                            accomplishData.absolutePath = this.getAbsolutePath();
 
                             loadAccomplish(accomplishData);
                             this.loadedModulePaths.push(this.getAbsolutePath());

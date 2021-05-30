@@ -1,6 +1,6 @@
 export type IESLoadingResponse = {
 
-    absoluteDirectory: string;
+    absolutePath: string;
 
     default?: any;
 
