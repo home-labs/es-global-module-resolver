@@ -3,7 +3,7 @@ import { CallerFileTrackTrace } from '@actjs.on/caller-file-track-trace';
 import Path from 'path';
 import url from 'url';
 
-import { AbstractESLoadingResolver } from '../abstract-es-loading-resolver';
+import { AbstractESLoadingResolver } from '../abstract-es-loading-resolver.js';
 import { IESLoadingOptions } from '../i-es-loading-options';
 
 
@@ -29,15 +29,14 @@ export class ESWebLoadingResolver extends AbstractESLoadingResolver {
 
         const currentDirectory: string = Path.dirname(url.fileURLToPath(import.meta.url));
 
-        const relativeRootDirectory: string = Path.relative(currentDirectory, process.cwd());
+        const relativeRootDirectory: string = this
+            .removeFloors(Path.relative(currentDirectory, process.cwd()), 1);
 
         const fileCallerURL: string = this.callerFileTrackTrace.getFileCallerURL();
 
         let fileCallerDirectory: string = Path.dirname(url.fileURLToPath(fileCallerURL));
 
         let parentFoldersCount: number;
-
-        let absolutePath4Test: string;
 
         relativePath = this
             .removeUnecessaryPathSeparator(this
@@ -66,18 +65,10 @@ export class ESWebLoadingResolver extends AbstractESLoadingResolver {
             this.absolutePath = Path.normalize(Path
                 .resolve(absoluteDirectory, `${relativePath}`));
         } else {
-            absolutePath4Test = Path.normalize(Path
-                .resolve(absoluteDirectory, `${relativePath}.${this.fileExtension}`));
-            // if (existsSync(absolutePath4Test)) {
-            //     this.absolutePath = absolutePath4Test;
-            // } else {
-            //     absoluteDirectory = Path.resolve(absoluteDirectory, `${relativePath}`);
+            absoluteDirectory = Path.resolve(absoluteDirectory, `${relativePath}`);
+            this.absolutePath = Path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
 
-            //     this.absolutePath = Path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
-            //     relativePath = `${relativePath}/index`;
-            // }
-
-            relativePath = `${relativePath}.${this.fileExtension}`;
+            relativePath = `${relativePath}/index.${this.fileExtension}`;
         }
 
         return this

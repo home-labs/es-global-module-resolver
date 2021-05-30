@@ -77,8 +77,8 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
                 this.absolutePath = absolutePath4Test;
             } else {
                 absoluteDirectory = Path.resolve(absoluteDirectory, `${relativePath}`);
-
                 this.absolutePath = Path.normalize(`${absoluteDirectory}/index.${this.fileExtension}`);
+
                 relativePath = `${relativePath}/index`;
             }
 

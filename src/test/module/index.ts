@@ -31,7 +31,7 @@ try {
             }
         );
 
-    console.log(`\nResolved directory: `, esLoadingResponse.absolutePath);
+    console.log(`\nResolved path: `, esLoadingResponse.absolutePath);
     console.log(`\n`);
     // ESTestModule = esLoadingResponse.default;
     ESTestModule = (esLoadingResponse as any)[esTestModuleSymbol];

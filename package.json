@@ -2,6 +2,11 @@
   "name": "@actjs.on/es-loading-resolver",
   "version": "1.0.0-rc.11",
   "type": "module",
+  "description": "This library help you to asynchronously import modules or global files (for side-effects).",
+  "repository": {
+    "url": "https://github.com/home-labs/es-loading-resolver"
+  },
+  "license": "MPL",
   "dependencies": {
     "@actjs.on/caller-file-track-trace": "1.0.0-rc.1",
     "path": "0.12.7"
