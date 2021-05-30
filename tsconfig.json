@@ -1,24 +1,18 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "module": "ES2020",
-    "target": "ES2015",
-    "skipLibCheck": true,
-    "strict": true,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "dist/@actjs.on/es-loading-resolver",
-    "moduleResolution": "node",
     "rootDir": "./",
-    "sourceMap": true
-  }
-  , "include": [
-    "package.json",
-    ".npmignore"
-  ]
-  , "references": [
+    "outDir": "dist/@actjs.on/es-loading-resolver"
+  },
+  "references": [
     {"path": "./src"}
+    , {"path": "./src/lib/web"}
+  ],
+  "include": [
+    "package.json"
   ]
+  // , "exclude": [
+  //   "test/**/*"
+  // ]
 }

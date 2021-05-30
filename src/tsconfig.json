@@ -1,17 +1,27 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "./",
-    "composite": true,
-    "resolveJsonModule": false,
-    "module": "ESNext",
-    "target": "ES2020"
-  }
-  , "include": [
-    "lib/**/*",
-    "local/**/*",
-    "test/**/*",
-    "web/**/*",
+    "rootDir": "../",
+    "outDir": "../dist/@actjs.on/es-loading-resolver",
+    // "rootDir": "../"
+  },
+  "include": [
+    "lib/local/**/*",
+    "lib/abstract-es-loading-resolver.ts",
+    "lib/i-es-loading-options.ts",
+    "lib/i-es-loading-response.ts",
+    // "test/global/local/**/*",
+    // "./test/global/local/*/*",
+    // "./test/global-number-extension-by-parent-folder",
+    // "./test/module/**/*",
     "index.ts"
   ]
+  // , "paths": {
+  //   "@actjs.on/es-loading-resolver/web": [
+  //     "dist/@actjs.on/es-loading-resolver/web"
+  //   ],
+  //   "@actjs.on/es-loading-resolver/web/*": [
+  //     "dist/@actjs.on/es-loading-resolver/web/*"
+  //   ]
+  // }
 }

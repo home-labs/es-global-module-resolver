@@ -1,0 +1,43 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // "rootDir": "./",
+    "rootDir": "../../../",
+    "outDir": "../../../dist/@actjs.on/es-loading-resolver/web"
+    // "baseUrl": "../../",
+  }
+  , "include": [
+    "lib/web/**/*",
+    "lib/abstract-es-loading-resolver.ts",
+    "lib/i-es-loading-options.ts",
+    "lib/i-es-loading-response.ts",
+    // "./test/global/web/**/*",
+    // "./test/global-number-extension-by-parent-folder",
+    // "web/**/*",
+
+    // "src/lib/web/**/*",
+    // "src/lib/abstract-es-loading-resolver.ts",
+    // "src/lib/i-es-loading-options.ts",
+    // "src/lib/i-es-loading-response.ts",
+    // "src/test/global/web/**/*",
+    // "src/test/global-number-extension-by-parent-folder",
+    // "src/web/**/*",
+
+    // "api.ts"
+  ]
+  , "references": [
+    {
+      // tem de ter por causa
+      "path": "../../tsconfig.base.json"
+    }
+  ]
+  // , "paths": {
+  //   "@actjs.on/es-loading-resolver/web": [
+  //     "dist/@actjs.on/es-loading-resolver/web"
+  //   ],
+  //   "@actjs.on/es-loading-resolver/web/*": [
+  //     "dist/@actjs.on/es-loading-resolver/web/*"
+  //   ]
+  // }
+}
+// quando der problema com .tsbuildinfo apague a pasta dist

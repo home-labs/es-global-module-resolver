@@ -1,7 +1,9 @@
 /// <reference path="./number-extension-by-folder/index.ts" />
 
-
+// cada um tem de ter o seu próprio teste
 import { ESWebLoadingResolver } from '../../../web/index.js';
+// import { ESWebLoadingResolver } from '@actjs.on/caller-file-track-trace/';
+// import { ESLoadingResolver } from '@actjs.on/caller-file-track-trace';
 
 import { IESLoadingResponse } from '../../../lib/i-es-loading-response.js';
 
