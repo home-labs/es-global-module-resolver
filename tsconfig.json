@@ -7,7 +7,7 @@
   },
   "references": [
     {"path": "./src"}
-    , {"path": "./src/lib/web"}
+    // , {"path": "./src/lib/web"}
   ],
   "include": [
     "package.json"

@@ -1,19 +1,17 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "../",
-    "outDir": "../dist/@actjs.on/es-loading-resolver",
-    // "rootDir": "../"
+    "rootDir": "./",
+    "outDir": "../dist/@actjs.on/es-loading-resolver"
   },
   "include": [
     "lib/local/**/*",
     "lib/abstract-es-loading-resolver.ts",
     "lib/i-es-loading-options.ts",
     "lib/i-es-loading-response.ts",
-    // "test/global/local/**/*",
-    // "./test/global/local/*/*",
-    // "./test/global-number-extension-by-parent-folder",
-    // "./test/module/**/*",
+    "test/global/local/**/*",
+    "test/global-number-extension-by-parent-folder",
+    "test/module/**/*",
     "index.ts"
   ]
   // , "paths": {
