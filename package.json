@@ -1,6 +1,6 @@
 {
   "name": "@actjs.on/es-loading-resolver",
-  "version": "1.0.0-rc.13",
+  "version": "1.0.0-rc.14",
   "type": "module",
   "description": "This library help you to asynchronously import modules or global files (for side-effects).",
   "repository": {
