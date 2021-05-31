@@ -2,8 +2,6 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ES2020",
-    "target": "ES2015",
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
@@ -11,19 +9,5 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "sourceMap": true
-    , "paths": {
-      "@actjs.on/es-loading-resolver": [
-        "dist/@actjs.on/es-loading-resolver"
-      ],
-      "@actjs.on/es-loading-resolver/*": [
-        "dist/@actjs.on/es-loading-resolver/*"
-      ],
-      "@actjs.on/es-loading-resolver/web": [
-        "dist/@actjs.on/es-loading-resolver/web"
-      ],
-      "@actjs.on/es-loading-resolver/web/*": [
-        "dist/@actjs.on/es-loading-resolver/web/*"
-      ]
-    }
   }
 }

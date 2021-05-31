@@ -17,12 +17,4 @@
       "path": "../tsconfig.base.json"
     }
   ]
-  , "paths": {
-    "@actjs.on/es-loading-resolver/web": [
-      "../../dist/@actjs.on/es-loading-resolver/web"
-    ],
-    "@actjs.on/es-loading-resolver/web/*": [
-      "../../dist/@actjs.on/es-loading-resolver/web/*"
-    ]
-  }
 }
