@@ -9,5 +9,8 @@
     "test/global/local/**/*",
     "test/module/**/*",
     "index.ts"
+  ],
+  "references": [
+    {"path": "./tsconfig.base.json"}
   ]
 }

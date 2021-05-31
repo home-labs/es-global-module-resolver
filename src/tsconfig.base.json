@@ -14,4 +14,7 @@
     "lib/i-es-loading-response.ts",
     "test/global-number-extension-by-parent-folder"
   ]
+  // , "exclude": [
+  //   "test/**/*"
+  // ]
 }
