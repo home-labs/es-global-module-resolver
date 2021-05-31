@@ -2,7 +2,8 @@
 
 // cada um tem de ter o seu próprio teste
 import { ESWebLoadingResolver } from '../../../web/index.js';
-// import { ESWebLoadingResolver } from '@actjs.on/';
+// works, but shouldn't be use before run $ tsc -b, because the directory dist will be rewrited
+// import { ESWebLoadingResolver } from '@actjs.on/es-loading-resolver/web';
 
 import { IESLoadingResponse } from '../../../lib/i-es-loading-response.js';
 

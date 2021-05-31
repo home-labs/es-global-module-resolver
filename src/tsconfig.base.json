@@ -5,7 +5,7 @@
     "target": "ES2020",
     "composite": true,
     "rootDir": "./",
-    "outDir": "../dist/@actjs.on/es-loading-resolver",
+    "baseUrl": "./",
     "paths": {
       "@actjs.on/es-loading-resolver/web": [
         "../dist/@actjs.on/es-loading-resolver/web"
@@ -13,7 +13,8 @@
       "@actjs.on/es-loading-resolver/web/*": [
         "../dist/@actjs.on/es-loading-resolver/web/*"
       ]
-    }
+    },
+    "outDir": "../dist/@actjs.on/es-loading-resolver"
   }
   ,
   "include": [
