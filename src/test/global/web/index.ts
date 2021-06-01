@@ -1,8 +1,6 @@
 /// <reference path="./number-extension-by-folder/index.ts" />
 
-// cada um tem de ter o seu próprio teste
 import { ESWebLoadingResolver } from '../../../web/index.js';
-// works, but shouldn't be use before run $ tsc -b, because the directory dist will be rewrited
 // import { ESWebLoadingResolver } from '@actjs.on/es-loading-resolver/web';
 
 import { IESLoadingResponse } from '../../../lib/i-es-loading-response.js';
@@ -15,7 +13,6 @@ let resolvedDirectory: IESLoadingResponse;
 
 try {
     resolvedDirectory = await esWebLoadingResolver
-        // voltar com a lógica anterior. Para este caso ele deve entender que há uma pasta com um arquivo index.js, se quiser referenciar um arquivo com nome diferente de index não deve suprimir a extensão do arquivo
         .import('../../global-number-extension-by-parent-folder',
         // .import('./number-extension-by-folder',
         // .import('./number-extension-by-folder/index',
