@@ -5,11 +5,12 @@
     "outDir": "dist/@actjs.on/es-loading-resolver",
     "resolveJsonModule": true
   },
-  "references": [
-    {"path": "./src"},
-    {"path": "./src/web"}
-  ],
   "include": [
     "package.json"
+  ],
+  "references": [
+    {
+      "path": "./src"
+    }
   ]
 }

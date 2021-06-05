@@ -6,14 +6,6 @@
     "composite": true,
     "rootDir": "./",
     "baseUrl": "./",
-    "paths": {
-      "@actjs.on/es-loading-resolver/web": [
-        "../dist/@actjs.on/es-loading-resolver/web"
-      ],
-      "@actjs.on/es-loading-resolver/web/*": [
-        "../dist/@actjs.on/es-loading-resolver/web/*"
-      ]
-    },
     "outDir": "../dist/@actjs.on/es-loading-resolver"
   }
   ,
