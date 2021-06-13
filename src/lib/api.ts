@@ -34,17 +34,25 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
 
         // the AbstractESLoadingResolver is who calls this object, so it is who sets the value of "import.meta.url". .removeFloors method should be used in cases where the calling file of this file  is in one or more of the above directories, so use 1 or more as last parameter.
         const relativeRootDirectory: string = this
-            .removeFloors(Path.relative(currentDirectory, process.cwd()), 0);
+            .removeFloors(Path.relative(currentDirectory, process.env.PWD as string), 0);
 
         // console.log(relativeRootDirectory)
 
         const fileCallerURL: string = this.callerFileTrackTrace.getFileCallerURL();
 
-        let fileCallerDirectory: string = Path.dirname(url.fileURLToPath(fileCallerURL));
+        // console.log(fileCallerURL);
+
+        let fileCallerPath: string = Path.dirname(url.fileURLToPath(fileCallerURL));
 
         let parentFoldersCount: number;
 
         let absolutePath4Test: string;
+
+        let relativeFileCallerDirectory: string;
+
+        let relativeDirectory: string;
+
+        let absoluteDirectory: string;
 
         relativePath = this
             .removeUnecessaryPathSeparator(this
@@ -56,15 +64,16 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
 
             relativePath = relativePath.replace(parentDirectoryPattern, '');
 
-            fileCallerDirectory = this.removeFloors(fileCallerDirectory, parentFoldersCount);
+            fileCallerPath = this.removeFloors(fileCallerPath, parentFoldersCount);
+            // console.log(fileCallerPath);
         }
 
-        const relativeFileDirectory: string = Path.relative(process.cwd(), fileCallerDirectory);
+        relativeFileCallerDirectory = Path.relative(process.env.PWD as string, fileCallerPath);
 
-        const relativeDirectory: string = this
-            .convertPathSeparator(`${relativeRootDirectory}/${relativeFileDirectory}`);
+        relativeDirectory = this
+            .convertPathSeparator(`${relativeRootDirectory}/${relativeFileCallerDirectory}`);
 
-        let absoluteDirectory: string = Path.resolve(relativeFileDirectory);
+        absoluteDirectory = Path.resolve(relativeFileCallerDirectory);
 
         if (this.indexPattern.test(relativePath)) {
             this.absolutePath = Path.normalize(Path
