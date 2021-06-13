@@ -2,20 +2,7 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "module": "ESNext",
-    "target": "ES2020",
     "composite": true,
-    "rootDir": "./",
-    "baseUrl": "./",
     "outDir": "../dist/@actjs.on/es-loading-resolver"
   }
-  ,
-  "include": [
-    "lib/abstract-es-loading-resolver.ts",
-    "lib/i-es-loading-options.ts",
-    "lib/i-es-loading-response.ts",
-    "test/global-number-extension-by-parent-folder"
-  ]
-  // , "exclude": [
-  //   "test/**/*"
-  // ]
 }

@@ -1,9 +1,9 @@
 /// <reference path="./number-extension-by-folder/index.ts" />
 
 
-import { ESLoadingResolver } from '../../../index.js';
+import { ESLoadingResolver } from '../../index.js';
 
-import { IESLoadingResponse } from '../../../lib/i-es-loading-response.js';
+import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
 
 
 const esLoadingResolver = new ESLoadingResolver();

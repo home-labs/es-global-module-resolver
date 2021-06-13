@@ -1,13 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "../dist/@actjs.on/es-loading-resolver"
-  },
   "include": [
-    "lib/local/**/*",
-    "test/global/local/**/*",
-    "test/module/**/*",
+    "lib/**/*",
+    "test/**/*",
     "index.ts"
   ],
   "references": [

@@ -1,16 +1,15 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "dist/@actjs.on/es-loading-resolver",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "outDir": "dist/@actjs.on/es-loading-resolver"
   },
-  "include": [
-    "package.json"
-  ],
   "references": [
     {
       "path": "./src"
     }
   ]
+  , "include": [
+    "package.json"
+  ],
 }
