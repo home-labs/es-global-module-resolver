@@ -13,7 +13,7 @@ let resolvedDirectory: IESLoadingResponse;
 
 try {
     resolvedDirectory = await esLoadingResolver
-        .import('../../global-number-extension-by-parent-folder',
+        .import('../global-number-extension-by-parent-folder',
         // .import('./number-extension-by-folder',
         // .import('./number-extension-by-folder/index.js',
         // .import('./number-extension-by-folder/index',

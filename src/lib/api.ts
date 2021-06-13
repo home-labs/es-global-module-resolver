@@ -2,7 +2,7 @@ import { CallerFileTrackTrace } from '@actjs.on/caller-file-track-trace';
 
 import Path from 'path';
 import url from 'url';
-import { existsSync } from 'fs';
+import fs from 'fs';
 
 import { AbstractESLoadingResolver } from './abstract-es-loading-resolver.js';
 import { IESLoadingOptions } from './i-es-loading-options';
@@ -72,7 +72,7 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
         } else {
             absolutePath4Test = Path.normalize(Path
                 .resolve(absoluteDirectory, `${relativePath}.${this.fileExtension}`));
-            if (existsSync(absolutePath4Test)) {
+            if (fs.existsSync(absolutePath4Test)) {
                 this.absolutePath = absolutePath4Test;
             } else {
                 absoluteDirectory = Path.resolve(absoluteDirectory, `${relativePath}`);
