@@ -4,8 +4,8 @@ import Path from 'path';
 import url from 'url';
 import { existsSync } from 'fs';
 
-import { AbstractESLoadingResolver } from '../abstract-es-loading-resolver.js';
-import { IESLoadingOptions } from '../i-es-loading-options';
+import { AbstractESLoadingResolver } from './abstract-es-loading-resolver.js';
+import { IESLoadingOptions } from './i-es-loading-options';
 
 
 export class ESLoadingResolver extends AbstractESLoadingResolver {
@@ -59,7 +59,6 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
 
         const relativeDirectory: string = this
             .convertPathSeparator(`${relativeRootDirectory}/${relativeFileDirectory}`);
-
 
         let absoluteDirectory: string = Path.resolve(relativeFileDirectory);
 
