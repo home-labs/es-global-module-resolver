@@ -30,7 +30,7 @@ export abstract class AbstractESLoadingResolver {
 
     }
 
-    protected abstract resolvePathData(relativePath: string): string;
+    protected abstract resolvePath(relativePath: string): string;
 
     protected abstract getAbsolutePath(): string;
 
@@ -66,7 +66,7 @@ export abstract class AbstractESLoadingResolver {
 
     import(relativePath: string, options?: IESLoadingOptions): Promise<IESLoadingResponse> {
 
-        const resolvedPath: string = this.resolvePathData(relativePath);
+        const resolvedPath: string = this.resolvePath(relativePath);
 
         const accomplishData: IESLoadingResponse = {
             absolutePath: ''
