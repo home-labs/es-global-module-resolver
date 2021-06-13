@@ -28,13 +28,13 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
 
         const parentDirectoryPattern: RegExp = new RegExp(/^(\.\.\/)+/);
 
-        const currentDirectory: string = Path.dirname(url.fileURLToPath(import.meta.url));
+        const currentPath: string = Path.dirname(url.fileURLToPath(import.meta.url));
 
-        // console.log(currentDirectory)
+        // console.log(currentPath)
 
-        // the AbstractESLoadingResolver is who calls this object, so it is who sets the value of "import.meta.url". .removeFloors method should be used in cases where the calling file of this file  is in one or more of the above directories, so use 1 or more as last parameter.
+        // the AbstractESLoadingResolver is who will actually import, but "import.meta.url" returns the current file url. The .removeFloors method should be used in cases where the calling file of this file is in one or more of the above directories, so use 1 or more as last parameter.
         const relativeRootDirectory: string = this
-            .removeFloors(Path.relative(currentDirectory, process.env.PWD as string), 0);
+            .removeFloors(Path.relative(currentPath, process.env.PWD as string), 0);
 
         // console.log(relativeRootDirectory)
 
