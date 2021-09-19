@@ -22,9 +22,9 @@ export abstract class AbstractESLoadingResolver {
 
         this.loadedModulePaths = [];
 
-        this.indexPattern = new RegExp(/(\/index)$/);
+        this.indexPattern = new RegExp(/\/index$/);
 
-        this.extensionPattern = new RegExp(/(\.(?:[^\/:*?"<>|]+))$/);
+        this.extensionPattern = new RegExp(/\.(?!.+\.)(.+)/);
 
         this.fileExtension = fileExtension || 'js';
 
