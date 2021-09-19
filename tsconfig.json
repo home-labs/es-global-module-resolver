@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "resolveJsonModule": true,
     "outDir": "dist/@actjs.on/es-loading-resolver"
   },
   "references": [
