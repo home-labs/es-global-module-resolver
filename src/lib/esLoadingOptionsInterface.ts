@@ -1,4 +1,4 @@
-export type IESLoadingOptions = {
+export type ESLoadingOptionsInterface = {
 
     timeoutValue: number;
 

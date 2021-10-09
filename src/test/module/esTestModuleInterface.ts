@@ -1,4 +1,4 @@
-export interface IESTestModule {
+export interface ESTestModuleInterface {
 
     printATestMessage: () => void;
 

@@ -1,7 +1,7 @@
 import Path from 'path';
 
-import { IESLoadingOptions } from './i-es-loading-options';
-import { IESLoadingResponse } from './i-es-loading-response';
+import { ESLoadingOptionsInterface } from './esLoadingOptionsInterface';
+import { ESLoadingResponseInterface } from './esLoadingResponseInterface';
 
 
 export abstract class AbstractESLoadingResolver {
@@ -16,7 +16,7 @@ export abstract class AbstractESLoadingResolver {
 
     private loadedModulePaths: string[];
 
-    constructor(fileExtension?: string, options?: IESLoadingOptions) {
+    constructor(fileExtension?: string, options?: ESLoadingOptionsInterface) {
 
         this.timeoutValue = options?.timeoutValue || 0;
 
@@ -64,11 +64,12 @@ export abstract class AbstractESLoadingResolver {
         return splittedPath.slice(0, splittedPath.length - count).join(pathSeparator);
     }
 
-    import(relativePath: string, options?: IESLoadingOptions): Promise<IESLoadingResponse> {
+    import(relativePath: string,
+        options?: ESLoadingOptionsInterface): Promise<ESLoadingResponseInterface> {
 
         const resolvedPath: string = this.resolvePath(relativePath);
 
-        const accomplishData: IESLoadingResponse = {
+        const accomplishData: ESLoadingResponseInterface = {
             absolutePath: ''
         };
 
@@ -97,13 +98,13 @@ export abstract class AbstractESLoadingResolver {
 
         return new Promise(
             (
-                loadAccomplish: (esLoadingResponse: IESLoadingResponse) => void,
+                loadAccomplish: (esLoadingResponse: ESLoadingResponseInterface) => void,
                 loadReject: (reason: any) => void
             ) => {
 
                 // import without inform a default module from 'path'; causes side-effects, so use it to load extensions of Built-in classes
                 // console.log(resolvedPath)
-                const importPromise: Promise<IESLoadingResponse> = import(resolvedPath);
+                const importPromise: Promise<ESLoadingResponseInterface> = import(resolvedPath);
 
                 if (this.timeoutValue) {
                     countdown = setTimeout(

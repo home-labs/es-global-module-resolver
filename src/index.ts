@@ -1,3 +1,3 @@
-export * from './lib/i-es-loading-response.js';
+export * from './lib/esLoadingResponseInterface.js';
 
 export * from './lib/api.js';

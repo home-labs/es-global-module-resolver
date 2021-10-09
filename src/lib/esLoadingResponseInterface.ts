@@ -1,4 +1,4 @@
-export type IESLoadingResponse = {
+export type ESLoadingResponseInterface = {
 
     absolutePath: string;
 

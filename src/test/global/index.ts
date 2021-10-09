@@ -3,12 +3,12 @@
 
 import { ESLoadingResolver } from '../../index.js';
 
-import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
+import { ESLoadingResponseInterface } from '../../lib/esLoadingResponseInterface.js';
 
 
 const esLoadingResolver = new ESLoadingResolver();
 
-let resolvedDirectory: IESLoadingResponse;
+let resolvedDirectory: ESLoadingResponseInterface;
 
 
 try {

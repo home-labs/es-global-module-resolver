@@ -4,8 +4,8 @@ import Path from 'path';
 import url from 'url';
 import fs from 'fs';
 
-import { AbstractESLoadingResolver } from './abstract-es-loading-resolver.js';
-import { IESLoadingOptions } from './i-es-loading-options';
+import { AbstractESLoadingResolver } from './abstractESLoadingResolver.js';
+import { ESLoadingOptionsInterface } from './esLoadingOptionsInterface.js';
 
 
 export class ESLoadingResolver extends AbstractESLoadingResolver {
@@ -14,7 +14,7 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
 
     private absolutePath!: string;
 
-    constructor(fileExtension?: string, options?: IESLoadingOptions) {
+    constructor(fileExtension?: string, options?: ESLoadingOptionsInterface) {
         super(fileExtension, options);
 
         this.callerFileTrackTrace = new CallerFileTrackTrace();

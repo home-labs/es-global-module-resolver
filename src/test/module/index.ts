@@ -1,20 +1,20 @@
 import { ESLoadingResolver } from '../../index.js';
 
-import { IESLoadingResponse } from '../../lib/i-es-loading-response.js';
+import { ESLoadingResponseInterface } from '../../lib/esLoadingResponseInterface.js';
 
-import { IESTestModule } from './i-es-test-module';
+import { ESTestModuleInterface } from './esTestModuleInterface';
 
 
 const esGlobalModuleResolver = new ESLoadingResolver();
 
 const esTestModuleSymbol: symbol = Symbol();
 
-let esLoadingResponse: IESLoadingResponse;
+let esLoadingResponse: ESLoadingResponseInterface;
 
-let ESTestModule: IESTestModule;
+let ESTestModule: ESTestModuleInterface;
 
 // Template Design Pattern
-let esTestModule: IESTestModule;
+let esTestModule: ESTestModuleInterface;
 
 
 try {
