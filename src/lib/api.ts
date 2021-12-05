@@ -33,6 +33,7 @@ export class ESLoadingResolver extends AbstractESLoadingResolver {
         // console.log(currentPath)
 
         // the AbstractESLoadingResolver is who will actually import, but "import.meta.url" returns the current file url. The .removeFloors method should be used in cases where the calling file of this file is in one or more of the above directories, so use 1 or more as last parameter.
+        // instalar no-dir, se for o caso, e usar o método removeChildFloorsFrom de Helper
         const relativeRootDirectory: string = this
             .removeFloors(Path.relative(currentPath, process.env.PWD as string), 0);
 

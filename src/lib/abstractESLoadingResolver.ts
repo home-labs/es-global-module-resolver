@@ -1,7 +1,7 @@
 import Path from 'path';
 
-import { ESLoadingOptionsInterface } from './esLoadingOptionsInterface';
-import { ESLoadingResponseInterface } from './esLoadingResponseInterface';
+import { ESLoadingOptionsInterface } from './esLoadingOptionsInterface.js';
+import { ESLoadingResponseInterface } from './esLoadingResponseInterface.js';
 
 
 export abstract class AbstractESLoadingResolver {
@@ -49,19 +49,6 @@ export abstract class AbstractESLoadingResolver {
             .replace(/(?:\/){2,}/g, '/')
             .replace(/\/$/, '')
             .replace(/(?:\.\/){2,}/, './'));
-    }
-
-    protected removeFloors(path: string, count: number, pathSeparator?: string): string {
-
-        let splittedPath: string[];
-
-        if (!pathSeparator) {
-            pathSeparator = Path.sep;
-        }
-
-        splittedPath = path.split(pathSeparator);
-
-        return splittedPath.slice(0, splittedPath.length - count).join(pathSeparator);
     }
 
     import(relativePath: string,
